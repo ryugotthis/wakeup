@@ -1,0 +1,196 @@
+{
+  "tags": [
+    {
+      "code": "FRAGRANCE_FREE",
+      "translations": {
+        "KO": {
+          "label": "향료 무첨가",
+          "description": "향료(Fragrance) 성분을 배제한 제품"
+        },
+        "EN": {
+          "label": "Fragrance-free",
+          "description": "Formulated without fragrance"
+        },
+        "FR": { "label": "Sans parfum", "description": "Formulé sans parfum" }
+      }
+    },
+    {
+      "code": "ESSENTIAL_OIL_FREE",
+      "translations": {
+        "KO": {
+          "label": "에센셜오일 무첨가",
+          "description": "에센셜오일을 배제한 제품"
+        },
+        "EN": {
+          "label": "Essential oil–free",
+          "description": "Formulated without essential oils"
+        },
+        "FR": {
+          "label": "Sans huiles essentielles",
+          "description": "Formulé sans huiles essentielles"
+        }
+      }
+    },
+    {
+      "code": "ALCOHOL_FREE",
+      "translations": {
+        "KO": {
+          "label": "알코올 무첨가",
+          "description": "알코올(예: Alcohol denat.)을 배제한 제품"
+        },
+        "EN": {
+          "label": "Alcohol-free",
+          "description": "Formulated without drying alcohols"
+        },
+        "FR": {
+          "label": "Sans alcool",
+          "description": "Formulé sans alcools desséchants"
+        }
+      }
+    },
+    {
+      "code": "GENTLE",
+      "translations": {
+        "KO": {
+          "label": "저자극",
+          "description": "민감 피부도 고려한 순한 사용감"
+        },
+        "EN": {
+          "label": "Gentle",
+          "description": "Designed to feel gentle on skin"
+        },
+        "FR": {
+          "label": "Doux",
+          "description": "Conçu pour être doux sur la peau"
+        }
+      }
+    },
+    {
+      "code": "BARRIER_SUPPORT",
+      "translations": {
+        "KO": {
+          "label": "장벽 케어",
+          "description": "피부 장벽을 보습/진정 관점에서 돕는 제품"
+        },
+        "EN": {
+          "label": "Barrier support",
+          "description": "Supports the skin barrier"
+        },
+        "FR": {
+          "label": "Soutien de la barrière",
+          "description": "Soutient la barrière cutanée"
+        }
+      }
+    },
+    {
+      "code": "HYDRATING",
+      "translations": {
+        "KO": {
+          "label": "수분 보충",
+          "description": "건조함을 줄이고 수분감을 채워주는 제품"
+        },
+        "EN": { "label": "Hydrating", "description": "Boosts hydration" },
+        "FR": {
+          "label": "Hydratant",
+          "description": "Apporte de l'hydratation"
+        }
+      }
+    },
+    {
+      "code": "SOOTHING",
+      "translations": {
+        "KO": {
+          "label": "진정",
+          "description": "피부가 예민할 때 편안함을 주는 사용감"
+        },
+        "EN": {
+          "label": "Soothing",
+          "description": "Helps soothe the feel of irritation"
+        },
+        "FR": {
+          "label": "Apaisant",
+          "description": "Aide à apaiser les sensations d'irritation"
+        }
+      }
+    },
+    {
+      "code": "LIGHTWEIGHT",
+      "translations": {
+        "KO": {
+          "label": "가벼운 제형",
+          "description": "무겁지 않고 산뜻한 사용감"
+        },
+        "EN": {
+          "label": "Lightweight",
+          "description": "Light, non-heavy texture"
+        },
+        "FR": {
+          "label": "Texture légère",
+          "description": "Texture légère, non lourde"
+        }
+      }
+    },
+    {
+      "code": "OIL_CONTROL",
+      "translations": {
+        "KO": {
+          "label": "유분 케어",
+          "description": "번들거림을 줄이는 데 초점을 둔 제품"
+        },
+        "EN": {
+          "label": "Oil control",
+          "description": "Helps manage excess oil"
+        },
+        "FR": {
+          "label": "Contrôle du sébum",
+          "description": "Aide à gérer l'excès de sébum"
+        }
+      }
+    },
+    {
+      "code": "ACNE_CARE",
+      "translations": {
+        "KO": {
+          "label": "트러블 케어",
+          "description": "여드름/트러블 고민을 고려한 제품"
+        },
+        "EN": {
+          "label": "Acne care",
+          "description": "Designed for breakout-prone skin"
+        },
+        "FR": {
+          "label": "Anti-imperfections",
+          "description": "Conçu pour les peaux à imperfections"
+        }
+      }
+    },
+    {
+      "code": "LOW_PH",
+      "translations": {
+        "KO": {
+          "label": "약산성",
+          "description": "약산성(pH) 컨셉을 가진 제품"
+        },
+        "EN": { "label": "Low pH", "description": "Low-pH concept" },
+        "FR": { "label": "pH doux", "description": "Concept de pH doux" }
+      }
+    },
+    {
+      "code": "NON_COMEDOGENIC",
+      "translations": {
+        "KO": {
+          "label": "모공 막힘 최소화",
+          "description": "모공 막힘 가능성을 낮추는 방향의 설계/컨셉"
+        },
+        "EN": {
+          "label": "Non-comedogenic",
+          "description": "Designed to minimize pore-clogging"
+        },
+        "FR": {
+          "label": "Non comédogène",
+          "description": "Conçu pour limiter l'obstruction des pores"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,1326 @@
+{
+  "version": 3,
+  "type": "SKTI_RESULT_TEMPLATES",
+  "templates": [
+    {
+      "skinType": "DS",
+      "title": {
+        "KO": "SKTI 결과 — “촉촉추구형” (DS)",
+        "EN": "SKTI Result — “Dewy Seeker” (DS)",
+        "FR": "Résultat SKTI — « À la recherche d’éclat » (DS)"
+      },
+      "sections": {
+        "personality": {
+          "title": { "KO": "성향", "EN": "Personality", "FR": "Profil" },
+          "body": {
+            "KO": "“피부는 항상 윤기 있어야 해! 건조함은 절대 안 돼.”\n→ 건성 / 수분 집중형",
+            "EN": "“My skin has to stay glowy—dryness is a no.”\n→ Dry / hydration-focused",
+            "FR": "« Ma peau doit rester lumineuse — la sécheresse, jamais. »\n→ Peau sèche / focus hydratation"
+          }
+        },
+        "skinProfile": {
+          "title": {
+            "KO": "피부 프로필",
+            "EN": "Skin Profile",
+            "FR": "Profil de peau"
+          },
+          "items": [
+            {
+              "label": { "KO": "타입", "EN": "Type", "FR": "Type" },
+              "value": {
+                "KO": "건성 / 수분 부족형",
+                "EN": "Dry / dehydration-prone",
+                "FR": "Peau sèche / manque d’hydratation"
+              }
+            },
+            {
+              "label": { "KO": "고민", "EN": "Concern", "FR": "Préoccupation" },
+              "value": {
+                "KO": "당김, 칙칙함, 잔주름",
+                "EN": "Tightness, dullness, fine lines",
+                "FR": "Tiraillements, teint terne, ridules"
+              }
+            },
+            {
+              "label": { "KO": "목표", "EN": "Goal", "FR": "Objectif" },
+              "value": {
+                "KO": "깊은 보습 & 자연스러운 윤기",
+                "EN": "Deep hydration & natural glow",
+                "FR": "Hydratation profonde & éclat naturel"
+              }
+            }
+          ]
+        },
+        "goodIngredients": {
+          "title": {
+            "KO": "좋은 성분",
+            "EN": "Good Ingredients for You",
+            "FR": "Ingrédients recommandés"
+          },
+          "rows": [
+            {
+              "category": {
+                "KO": "보습",
+                "EN": "Hydration",
+                "FR": "Hydratation"
+              },
+              "ingredients": {
+                "KO": "히알루론산, 글리세린, 베타인",
+                "EN": "Hyaluronic acid, glycerin, betaine",
+                "FR": "Acide hyaluronique, glycérine, bétaïne"
+              },
+              "benefits": {
+                "KO": "수분을 끌어당기고 유지",
+                "EN": "Attracts and retains moisture",
+                "FR": "Attire et retient l’hydratation"
+              }
+            },
+            {
+              "category": {
+                "KO": "영양 오일",
+                "EN": "Nourishing oils",
+                "FR": "Huiles nourrissantes"
+              },
+              "ingredients": {
+                "KO": "호호바 오일, 시어버터",
+                "EN": "Jojoba oil, shea butter",
+                "FR": "Huile de jojoba, beurre de karité"
+              },
+              "benefits": {
+                "KO": "피부 유연함과 탄력 회복",
+                "EN": "Restores suppleness and comfort",
+                "FR": "Restaure souplesse et confort"
+              }
+            },
+            {
+              "category": {
+                "KO": "장벽 케어",
+                "EN": "Barrier support",
+                "FR": "Renforcement de la barrière"
+              },
+              "ingredients": {
+                "KO": "세라마이드, 판테놀",
+                "EN": "Ceramides, panthenol",
+                "FR": "Céramides, panthénol"
+              },
+              "benefits": {
+                "KO": "피부 장벽 강화",
+                "EN": "Strengthens the skin barrier",
+                "FR": "Renforce la barrière cutanée"
+              }
+            }
+          ]
+        },
+        "avoidIngredients": {
+          "title": {
+            "KO": "피해야 할 성분",
+            "EN": "Ingredients to Avoid",
+            "FR": "Ingrédients à éviter"
+          },
+          "rows": [
+            {
+              "category": { "KO": "알코올", "EN": "Alcohol", "FR": "Alcool" },
+              "ingredients": {
+                "KO": "에탄올, 변성 알코올",
+                "EN": "Ethanol, denatured alcohol",
+                "FR": "Éthanol, alcool dénaturé"
+              },
+              "why": {
+                "KO": "건조함과 자극 증가",
+                "EN": "Can increase dryness and irritation",
+                "FR": "Peut augmenter la sécheresse et l’irritation"
+              }
+            },
+            {
+              "category": {
+                "KO": "강한 각질 제거",
+                "EN": "Harsh exfoliation",
+                "FR": "Exfoliation agressive"
+              },
+              "ingredients": {
+                "KO": "고농도 AHA/BHA",
+                "EN": "High-strength AHA/BHA",
+                "FR": "AHA/BHA à forte concentration"
+              },
+              "why": {
+                "KO": "피부 수분 보호막 손상",
+                "EN": "May weaken the moisture barrier",
+                "FR": "Peut fragiliser la barrière d’hydratation"
+              }
+            },
+            {
+              "category": {
+                "KO": "클레이 마스크",
+                "EN": "Clay masks",
+                "FR": "Masques à l’argile"
+              },
+              "ingredients": {
+                "KO": "카올린 고함량 제품",
+                "EN": "High-kaolin formulas",
+                "FR": "Formules riches en kaolin"
+              },
+              "why": {
+                "KO": "필요 유분까지 과하게 흡수",
+                "EN": "Can strip too much natural oil",
+                "FR": "Peut absorber trop de lipides naturels"
+              }
+            }
+          ]
+        },
+        "dailyRoutine": {
+          "title": {
+            "KO": "데일리 루틴",
+            "EN": "Daily Routine",
+            "FR": "Routine quotidienne"
+          },
+          "morning": {
+            "KO": [
+              "수분 토너 또는 미스트",
+              "히알루론산 에센스 / 세럼",
+              "영양감 있는 보습 크림",
+              "자외선 차단제 (SPF30 이상)"
+            ],
+            "EN": [
+              "Hydrating toner or mist",
+              "Hyaluronic acid essence/serum",
+              "Nourishing moisturizer",
+              "Sunscreen (SPF 30+)"
+            ],
+            "FR": [
+              "Tonique ou brume hydratante",
+              "Essence/sérum à l’acide hyaluronique",
+              "Crème hydratante nourrissante",
+              "Protection solaire (SPF 30+)"
+            ]
+          },
+          "evening": {
+            "KO": [
+              "크림 타입 또는 오일 클렌저",
+              "수분 에센스",
+              "보습 크림 또는 슬리핑 팩"
+            ],
+            "EN": [
+              "Cream/oil cleanser",
+              "Hydrating essence",
+              "Moisturizer or sleeping pack"
+            ],
+            "FR": [
+              "Nettoyant crème/huile",
+              "Essence hydratante",
+              "Crème hydratante ou masque de nuit"
+            ]
+          }
+        },
+        "weeklyCare": {
+          "title": {
+            "KO": "주간/격주 케어",
+            "EN": "Weekly / Bi-weekly Care",
+            "FR": "Soin hebdo / bimensuel"
+          },
+          "items": {
+            "KO": [
+              "주 2회 깊은 보습 마스크",
+              "뜨거운 물 / 장시간 샤워 피하기",
+              "취침 전 페이스 오일 마사지"
+            ],
+            "EN": [
+              "Deep hydration mask twice a week",
+              "Avoid hot water / long showers",
+              "Face oil massage before bed"
+            ],
+            "FR": [
+              "Masque hydratation intense 2×/semaine",
+              "Éviter l’eau chaude / les douches longues",
+              "Massage à l’huile visage avant le coucher"
+            ]
+          }
+        },
+        "tip": {
+          "title": {
+            "KO": "SKTI 팁",
+            "EN": "Tip from SKTI",
+            "FR": "Conseil SKTI"
+          },
+          "body": {
+            "KO": "피부는 항상 수분을 원해요 —\n무거운 제품 레이어링보다 수분 공급에 집중하세요.\n\n물을 충분히 마시고, 숙면을 취하면 자연스럽게 윤기가 살아나요 ☀️",
+            "EN": "Your skin always craves water—focus on hydration rather than piling on heavy layers.\n\nDrink enough water and sleep well for a natural glow ☀️",
+            "FR": "Votre peau a toujours besoin d’eau — privilégiez l’hydratation plutôt que d’accumuler des couches trop riches.\n\nBuvez suffisamment et dormez bien pour un éclat naturel ☀️"
+          }
+        }
+      },
+      "recommendationPolicy": {
+        "limit": 3,
+        "strategy": "RULE_BASED",
+        "rules": {
+          "skinTypeMustMatch": true,
+          "preferredCategories": [
+            "TONER",
+            "SERUM",
+            "CREAM",
+            "ESSENCE",
+            "AMPOULE",
+            "MIST"
+          ],
+          "requiredTagsAny": ["HYDRATING"],
+          "boostTags": ["BARRIER_SUPPORT", "SOOTHING", "ALCOHOL_FREE"],
+          "avoidTagsAny": []
+        }
+      }
+    },
+
+    {
+      "skinType": "OB",
+      "title": {
+        "KO": "SKTI 결과 — “유분밸런서” (OB)",
+        "EN": "SKTI Result — “Oil Balancer” (OB)",
+        "FR": "Résultat SKTI — « Équilibreur de sébum » (OB)"
+      },
+      "sections": {
+        "personality": {
+          "title": { "KO": "성향", "EN": "Personality", "FR": "Profil" },
+          "body": {
+            "KO": "“피지는 피부를 보호하지만, 번들거림은 싫어!”\n→ 지성 / 피지 밸런스 관리형",
+            "EN": "“Oil protects my skin—but I hate the shine.”\n→ Oily / oil-balance focused",
+            "FR": "« Le sébum protège la peau — mais je déteste briller. »\n→ Peau grasse / focus équilibre"
+          }
+        },
+        "skinProfile": {
+          "title": {
+            "KO": "피부 프로필",
+            "EN": "Skin Profile",
+            "FR": "Profil de peau"
+          },
+          "items": [
+            {
+              "label": { "KO": "타입", "EN": "Type", "FR": "Type" },
+              "value": { "KO": "지성", "EN": "Oily", "FR": "Peau grasse" }
+            },
+            {
+              "label": { "KO": "고민", "EN": "Concern", "FR": "Préoccupation" },
+              "value": {
+                "KO": "번들거림, 넓은 모공, 모공 막힘",
+                "EN": "Shine, enlarged pores, congestion",
+                "FR": "Brillance, pores dilatés, pores bouchés"
+              }
+            },
+            {
+              "label": { "KO": "목표", "EN": "Goal", "FR": "Objectif" },
+              "value": {
+                "KO": "유수분 밸런스 유지",
+                "EN": "Maintain oil-water balance",
+                "FR": "Maintenir l’équilibre eau/sébum"
+              }
+            }
+          ]
+        },
+        "goodIngredients": {
+          "title": {
+            "KO": "좋은 성분",
+            "EN": "Good Ingredients for You",
+            "FR": "Ingrédients recommandés"
+          },
+          "rows": [
+            {
+              "category": {
+                "KO": "피지 조절",
+                "EN": "Oil control",
+                "FR": "Contrôle du sébum"
+              },
+              "ingredients": {
+                "KO": "나이아신아마이드, 징크 PCA",
+                "EN": "Niacinamide, zinc PCA",
+                "FR": "Niacinamide, zinc PCA"
+              },
+              "benefits": {
+                "KO": "피지 분비 조절",
+                "EN": "Helps regulate sebum",
+                "FR": "Aide à réguler le sébum"
+              }
+            },
+            {
+              "category": {
+                "KO": "가벼운 보습",
+                "EN": "Light hydration",
+                "FR": "Hydratation légère"
+              },
+              "ingredients": {
+                "KO": "녹차, 알로에",
+                "EN": "Green tea, aloe",
+                "FR": "Thé vert, aloe vera"
+              },
+              "benefits": {
+                "KO": "무겁지 않게 진정 + 수분 공급",
+                "EN": "Soothes + hydrates without heaviness",
+                "FR": "Apaise + hydrate sans effet lourd"
+              }
+            },
+            {
+              "category": {
+                "KO": "순한 각질 케어",
+                "EN": "Gentle exfoliation",
+                "FR": "Exfoliation douce"
+              },
+              "ingredients": {
+                "KO": "살리실산(BHA), LHA",
+                "EN": "Salicylic acid (BHA), LHA",
+                "FR": "Acide salicylique (BHA), LHA"
+              },
+              "benefits": {
+                "KO": "모공 정돈",
+                "EN": "Helps refine pores",
+                "FR": "Aide à affiner les pores"
+              }
+            }
+          ]
+        },
+        "avoidIngredients": {
+          "title": {
+            "KO": "피해야 할 성분",
+            "EN": "Ingredients to Avoid",
+            "FR": "Ingrédients à éviter"
+          },
+          "rows": [
+            {
+              "category": {
+                "KO": "무거운 오일",
+                "EN": "Heavy oils",
+                "FR": "Huiles lourdes"
+              },
+              "ingredients": {
+                "KO": "코코넛 오일, 미네랄 오일",
+                "EN": "Coconut oil, mineral oil",
+                "FR": "Huile de coco, huile minérale"
+              },
+              "why": {
+                "KO": "모공 막힘 가능",
+                "EN": "May clog pores",
+                "FR": "Peut boucher les pores"
+              }
+            },
+            {
+              "category": {
+                "KO": "리치 크림",
+                "EN": "Rich creams",
+                "FR": "Crèmes trop riches"
+              },
+              "ingredients": {
+                "KO": "페트롤라툼 계열",
+                "EN": "Petrolatum-based formulas",
+                "FR": "Formules à base de pétrolatum"
+              },
+              "why": {
+                "KO": "지성 피부에 과도한 밀폐",
+                "EN": "Too occlusive for oily skin",
+                "FR": "Trop occlusif pour peau grasse"
+              }
+            },
+            {
+              "category": {
+                "KO": "강한 스크럽",
+                "EN": "Harsh scrubs",
+                "FR": "Gommages agressifs"
+              },
+              "ingredients": {
+                "KO": "입자 큰 스크럽",
+                "EN": "Large-grain scrubs",
+                "FR": "Gommages à gros grains"
+              },
+              "why": {
+                "KO": "피부 자극 및 미세 손상",
+                "EN": "Can irritate and micro-damage skin",
+                "FR": "Peut irriter et micro-lésions"
+              }
+            }
+          ]
+        },
+        "dailyRoutine": {
+          "title": {
+            "KO": "데일리 루틴",
+            "EN": "Daily Routine",
+            "FR": "Routine quotidienne"
+          },
+          "morning": {
+            "KO": [
+              "폼 클렌저",
+              "녹차 또는 BHA 토너",
+              "젤 타입 보습제",
+              "피지 컨트롤 선크림"
+            ],
+            "EN": [
+              "Foam cleanser",
+              "Green tea or BHA toner",
+              "Gel moisturizer",
+              "Oil-control sunscreen"
+            ],
+            "FR": [
+              "Nettoyant moussant",
+              "Tonique au thé vert ou BHA",
+              "Hydratant gel",
+              "Solaire contrôle de sébum"
+            ]
+          },
+          "evening": {
+            "KO": [
+              "순한 클렌저",
+              "나이아신아마이드 / 징크 세럼",
+              "오일 프리 보습제"
+            ],
+            "EN": [
+              "Gentle cleanser",
+              "Niacinamide / zinc serum",
+              "Oil-free moisturizer"
+            ],
+            "FR": [
+              "Nettoyant doux",
+              "Sérum niacinamide / zinc",
+              "Hydratant sans huile"
+            ]
+          }
+        },
+        "weeklyCare": {
+          "title": {
+            "KO": "주간/격주 케어",
+            "EN": "Weekly / Bi-weekly Care",
+            "FR": "Soin hebdo / bimensuel"
+          },
+          "items": {
+            "KO": [
+              "주 1회 딥 클렌징 클레이 마스크",
+              "주 1회 순한 각질 케어 (BHA / 효소)",
+              "보습 생략 금지 — 수분이 부족하면 피지가 더 증가해요"
+            ],
+            "EN": [
+              "Deep-cleansing clay mask once a week",
+              "Gentle exfoliation once a week (BHA/enzymes)",
+              "Don’t skip hydration—dehydration can increase oil"
+            ],
+            "FR": [
+              "Masque à l’argile 1×/semaine",
+              "Exfoliation douce 1×/semaine (BHA/enzymes)",
+              "Ne zappez pas l’hydratation : la déshydratation peut augmenter le sébum"
+            ]
+          }
+        },
+        "tip": {
+          "title": {
+            "KO": "SKTI 팁",
+            "EN": "Tip from SKTI",
+            "FR": "Conseil SKTI"
+          },
+          "body": {
+            "KO": "지성 피부 = 보습 불필요 ❌\n\n수분이 충분하면 피지 분비는 오히려 줄어들어요 💧",
+            "EN": "Oily skin ≠ no moisturizer ❌\n\nWhen hydration is enough, oil production can actually go down 💧",
+            "FR": "Peau grasse ≠ pas besoin d’hydratant ❌\n\nQuand l’hydratation est suffisante, la production de sébum peut diminuer 💧"
+          }
+        }
+      },
+      "recommendationPolicy": {
+        "limit": 3,
+        "strategy": "RULE_BASED",
+        "rules": {
+          "skinTypeMustMatch": true,
+          "preferredCategories": [
+            "TONER",
+            "SERUM",
+            "CREAM",
+            "PAD",
+            "MASK_PACK"
+          ],
+          "requiredTagsAny": ["OIL_CONTROL"],
+          "boostTags": ["LIGHTWEIGHT", "ACNE_CARE", "SOOTHING"],
+          "avoidTagsAny": []
+        }
+      }
+    },
+
+    {
+      "skinType": "HS",
+      "title": {
+        "KO": "SKTI 결과 — “초예민보호형” (HS)",
+        "EN": "SKTI Result — “Hyper Sensitive” (HS)",
+        "FR": "Résultat SKTI — « Hyper sensible » (HS)"
+      },
+      "sections": {
+        "personality": {
+          "title": { "KO": "성향", "EN": "Personality", "FR": "Profil" },
+          "body": {
+            "KO": "“제품 하나만 잘못 써도 바로 피부가 반응해요!”\n→ 민감성 / 성분 민감형",
+            "EN": "“One wrong product and my skin reacts immediately.”\n→ Sensitive / ingredient-reactive",
+            "FR": "« Un seul mauvais produit et ma peau réagit tout de suite. »\n→ Peau sensible / réactive"
+          }
+        },
+        "skinProfile": {
+          "title": {
+            "KO": "피부 프로필",
+            "EN": "Skin Profile",
+            "FR": "Profil de peau"
+          },
+          "items": [
+            {
+              "label": { "KO": "타입", "EN": "Type", "FR": "Type" },
+              "value": {
+                "KO": "민감성 / 반응성 피부",
+                "EN": "Sensitive / reactive skin",
+                "FR": "Peau sensible / réactive"
+              }
+            },
+            {
+              "label": { "KO": "고민", "EN": "Concern", "FR": "Préoccupation" },
+              "value": {
+                "KO": "붉어짐, 자극, 피부 트러블 반응",
+                "EN": "Redness, irritation, flare-ups",
+                "FR": "Rougeurs, irritations, réactions"
+              }
+            },
+            {
+              "label": { "KO": "목표", "EN": "Goal", "FR": "Objectif" },
+              "value": {
+                "KO": "진정 + 보호 + 장벽 회복",
+                "EN": "Soothe + protect + repair barrier",
+                "FR": "Apaiser + protéger + réparer la barrière"
+              }
+            }
+          ]
+        },
+        "goodIngredients": {
+          "title": {
+            "KO": "좋은 성분",
+            "EN": "Good Ingredients for You",
+            "FR": "Ingrédients recommandés"
+          },
+          "rows": [
+            {
+              "category": { "KO": "진정", "EN": "Soothing", "FR": "Apaisant" },
+              "ingredients": {
+                "KO": "병풀, 판테놀, 마데카소사이드",
+                "EN": "Centella, panthenol, madecassoside",
+                "FR": "Centella, panthénol, madécassoside"
+              },
+              "benefits": {
+                "KO": "염증 및 붉어짐 완화",
+                "EN": "Helps calm inflammation and redness",
+                "FR": "Aide à calmer inflammation et rougeurs"
+              }
+            },
+            {
+              "category": {
+                "KO": "보습",
+                "EN": "Hydration",
+                "FR": "Hydratation"
+              },
+              "ingredients": {
+                "KO": "베타글루칸, 알란토인",
+                "EN": "Beta-glucan, allantoin",
+                "FR": "Bêta-glucane, allantoïne"
+              },
+              "benefits": {
+                "KO": "순하고 깊은 보습",
+                "EN": "Gentle, deep hydration",
+                "FR": "Hydratation douce et profonde"
+              }
+            },
+            {
+              "category": {
+                "KO": "장벽 케어",
+                "EN": "Barrier support",
+                "FR": "Barrière cutanée"
+              },
+              "ingredients": {
+                "KO": "세라마이드 NP, 스쿠알란",
+                "EN": "Ceramide NP, squalane",
+                "FR": "Céramide NP, squalane"
+              },
+              "benefits": {
+                "KO": "피부 보호 및 장벽 강화",
+                "EN": "Protects and strengthens the barrier",
+                "FR": "Protège et renforce la barrière"
+              }
+            }
+          ]
+        },
+        "avoidIngredients": {
+          "title": {
+            "KO": "피해야 할 성분",
+            "EN": "Ingredients to Avoid",
+            "FR": "Ingrédients à éviter"
+          },
+          "rows": [
+            {
+              "category": { "KO": "향료", "EN": "Fragrance", "FR": "Parfum" },
+              "ingredients": {
+                "KO": "향료, 리날룰, 시트로넬롤",
+                "EN": "Fragrance, linalool, citronellol",
+                "FR": "Parfum, linalool, citronellol"
+              },
+              "why": {
+                "KO": "자극 유발",
+                "EN": "May trigger irritation",
+                "FR": "Peut déclencher une irritation"
+              }
+            },
+            {
+              "category": { "KO": "알코올", "EN": "Alcohol", "FR": "Alcool" },
+              "ingredients": {
+                "KO": "에탄올, 변성 알코올",
+                "EN": "Ethanol, denatured alcohol",
+                "FR": "Éthanol, alcool dénaturé"
+              },
+              "why": {
+                "KO": "건조 및 따가움",
+                "EN": "Can cause dryness and stinging",
+                "FR": "Peut assécher et piquer"
+              }
+            },
+            {
+              "category": {
+                "KO": "강한 기능성 성분",
+                "EN": "Strong actives",
+                "FR": "Actifs puissants"
+              },
+              "ingredients": {
+                "KO": "레티놀, 고농도 AHA/BHA",
+                "EN": "Retinol, high-strength AHA/BHA",
+                "FR": "Rétinol, AHA/BHA concentrés"
+              },
+              "why": {
+                "KO": "자극 가능성 높음",
+                "EN": "Higher irritation risk",
+                "FR": "Risque d’irritation plus élevé"
+              }
+            }
+          ]
+        },
+        "dailyRoutine": {
+          "title": {
+            "KO": "데일리 루틴",
+            "EN": "Daily Routine",
+            "FR": "Routine quotidienne"
+          },
+          "morning": {
+            "KO": [
+              "약산성 저자극 클렌저",
+              "진정 토너",
+              "진정 크림 / 보습제",
+              "무기자차 선크림"
+            ],
+            "EN": [
+              "Low-pH gentle cleanser",
+              "Soothing toner",
+              "Soothing moisturizer",
+              "Mineral sunscreen"
+            ],
+            "FR": [
+              "Nettoyant doux au pH bas",
+              "Tonique apaisant",
+              "Hydratant apaisant",
+              "Solaire minéral"
+            ]
+          },
+          "evening": {
+            "KO": ["순한 클렌저", "병풀 / 마데카 세럼", "장벽 강화 크림"],
+            "EN": [
+              "Gentle cleanser",
+              "Centella / madecassoside serum",
+              "Barrier-repair cream"
+            ],
+            "FR": [
+              "Nettoyant doux",
+              "Sérum centella / madécassoside",
+              "Crème réparatrice barrière"
+            ]
+          }
+        },
+        "weeklyCare": {
+          "title": {
+            "KO": "주간/격주 케어",
+            "EN": "Weekly / Bi-weekly Care",
+            "FR": "Soin hebdo / bimensuel"
+          },
+          "items": {
+            "KO": [
+              "주 1회 진정 시트 마스크",
+              "과도한 각질 제거 피하기",
+              "제품 최소화 (Less is more)"
+            ],
+            "EN": [
+              "Soothing sheet mask once a week",
+              "Avoid over-exfoliating",
+              "Keep it simple (less is more)"
+            ],
+            "FR": [
+              "Masque tissu apaisant 1×/semaine",
+              "Éviter la sur-exfoliation",
+              "Simplifier la routine (less is more)"
+            ]
+          }
+        },
+        "tip": {
+          "title": {
+            "KO": "SKTI 팁",
+            "EN": "Tip from SKTI",
+            "FR": "Conseil SKTI"
+          },
+          "body": {
+            "KO": "피부가 따갑다면 바로 중단하세요.\n\n순하고 꾸준한 관리가 피부를 안정시켜요 💗",
+            "EN": "If your skin stings, stop immediately.\n\nGentle and consistent care helps your skin stay calm 💗",
+            "FR": "Si votre peau pique, stoppez immédiatement.\n\nUne routine douce et régulière aide la peau à se stabiliser 💗"
+          }
+        }
+      },
+      "recommendationPolicy": {
+        "limit": 3,
+        "strategy": "RULE_BASED",
+        "rules": {
+          "skinTypeMustMatch": true,
+          "preferredCategories": [
+            "TONER",
+            "SERUM",
+            "CREAM",
+            "ESSENCE",
+            "AMPOULE",
+            "MIST",
+            "MASK_PACK"
+          ],
+          "requiredTagsAny": ["SOOTHING"],
+          "boostTags": [
+            "GENTLE",
+            "BARRIER_SUPPORT",
+            "HYDRATING",
+            "FRAGRANCE_FREE",
+            "ESSENTIAL_OIL_FREE",
+            "ALCOHOL_FREE"
+          ],
+          "avoidTagsAny": []
+        }
+      }
+    },
+
+    {
+      "skinType": "CC",
+      "title": {
+        "KO": "SKTI 결과 — “밸런스복합형” (CC)",
+        "EN": "SKTI Result — “Calm Combo” (CC)",
+        "FR": "Résultat SKTI — « Mixte équilibrée » (CC)"
+      },
+      "sections": {
+        "personality": {
+          "title": { "KO": "성향", "EN": "Personality", "FR": "Profil" },
+          "body": {
+            "KO": "“T-zone은 번들, U-zone은 건조… 왜 이렇게 복잡하지?”\n→ 복합성 / 부위별 케어 필요형",
+            "EN": "“Oily T-zone, dry cheeks… why is it so complicated?”\n→ Combination / zone-specific care",
+            "FR": "« Zone T grasse, joues sèches… pourquoi c’est si compliqué ? »\n→ Peau mixte / soin par zones"
+          }
+        },
+        "skinProfile": {
+          "title": {
+            "KO": "피부 프로필",
+            "EN": "Skin Profile",
+            "FR": "Profil de peau"
+          },
+          "items": [
+            {
+              "label": { "KO": "타입", "EN": "Type", "FR": "Type" },
+              "value": {
+                "KO": "복합성",
+                "EN": "Combination",
+                "FR": "Peau mixte"
+              }
+            },
+            {
+              "label": { "KO": "고민", "EN": "Concern", "FR": "Préoccupation" },
+              "value": {
+                "KO": "T존 번들거림, 볼 건조",
+                "EN": "Oily T-zone, dry cheeks",
+                "FR": "Zone T grasse, joues sèches"
+              }
+            },
+            {
+              "label": { "KO": "목표", "EN": "Goal", "FR": "Objectif" },
+              "value": {
+                "KO": "유수분 밸런스 유지 & 번들거림 컨트롤",
+                "EN": "Maintain balance & control shine",
+                "FR": "Maintenir l’équilibre & contrôler la brillance"
+              }
+            }
+          ]
+        },
+        "goodIngredients": {
+          "title": {
+            "KO": "좋은 성분",
+            "EN": "Good Ingredients for You",
+            "FR": "Ingrédients recommandés"
+          },
+          "rows": [
+            {
+              "category": {
+                "KO": "밸런스 케어",
+                "EN": "Balancing",
+                "FR": "Équilibrant"
+              },
+              "ingredients": {
+                "KO": "녹차, 나이아신아마이드",
+                "EN": "Green tea, niacinamide",
+                "FR": "Thé vert, niacinamide"
+              },
+              "benefits": {
+                "KO": "피지 조절 + 피부 톤 균형",
+                "EN": "Helps regulate oil + even tone",
+                "FR": "Aide à réguler le sébum + unifier le teint"
+              }
+            },
+            {
+              "category": {
+                "KO": "보습",
+                "EN": "Hydration",
+                "FR": "Hydratation"
+              },
+              "ingredients": {
+                "KO": "히알루론산, 베타인",
+                "EN": "Hyaluronic acid, betaine",
+                "FR": "Acide hyaluronique, bétaïne"
+              },
+              "benefits": {
+                "KO": "무겁지 않은 수분 공급",
+                "EN": "Hydrates without heaviness",
+                "FR": "Hydrate sans alourdir"
+              }
+            },
+            {
+              "category": {
+                "KO": "순한 각질 케어",
+                "EN": "Gentle exfoliation",
+                "FR": "Exfoliation douce"
+              },
+              "ingredients": { "KO": "PHA", "EN": "PHA", "FR": "PHA" },
+              "benefits": {
+                "KO": "자극 없이 피부결 정돈",
+                "EN": "Smooths texture with low irritation",
+                "FR": "Affine le grain de peau sans trop irriter"
+              }
+            }
+          ]
+        },
+        "avoidIngredients": {
+          "title": {
+            "KO": "피해야 할 성분",
+            "EN": "Ingredients to Avoid",
+            "FR": "Ingrédients à éviter"
+          },
+          "rows": [
+            {
+              "category": {
+                "KO": "무거운 오일",
+                "EN": "Heavy oils",
+                "FR": "Huiles lourdes"
+              },
+              "ingredients": {
+                "KO": "시어버터, 코코넛 오일",
+                "EN": "Shea butter, coconut oil",
+                "FR": "Beurre de karité, huile de coco"
+              },
+              "why": {
+                "KO": "T존에는 과하게 리치함",
+                "EN": "Too rich for the T-zone",
+                "FR": "Trop riche pour la zone T"
+              }
+            },
+            {
+              "category": {
+                "KO": "설페이트",
+                "EN": "Sulfates",
+                "FR": "Sulfates"
+              },
+              "ingredients": {
+                "KO": "SLS, SLES",
+                "EN": "SLS, SLES",
+                "FR": "SLS, SLES"
+              },
+              "why": {
+                "KO": "볼 건조 유발",
+                "EN": "Can dry out cheeks",
+                "FR": "Peut assécher les joues"
+              }
+            },
+            {
+              "category": {
+                "KO": "과도한 매트 성분",
+                "EN": "Over-mattifying formulas",
+                "FR": "Formules trop matifiantes"
+              },
+              "ingredients": {
+                "KO": "알코올 함량 높은 토너",
+                "EN": "High-alcohol toners",
+                "FR": "Toniques riches en alcool"
+              },
+              "why": {
+                "KO": "피부 장벽 불균형 유발",
+                "EN": "May disrupt barrier balance",
+                "FR": "Peut déséquilibrer la barrière cutanée"
+              }
+            }
+          ]
+        },
+        "dailyRoutine": {
+          "title": {
+            "KO": "데일리 루틴",
+            "EN": "Daily Routine",
+            "FR": "Routine quotidienne"
+          },
+          "morning": {
+            "KO": [
+              "순한 폼 클렌저",
+              "가벼운 토너",
+              "T존 → 젤 보습제 / 볼 → 크림",
+              "자외선 차단제"
+            ],
+            "EN": [
+              "Gentle foaming cleanser",
+              "Light toner",
+              "T-zone → gel moisturizer / cheeks → cream",
+              "Sunscreen"
+            ],
+            "FR": [
+              "Nettoyant moussant doux",
+              "Tonique léger",
+              "Zone T → gel / joues → crème",
+              "Protection solaire"
+            ]
+          },
+          "evening": {
+            "KO": ["클렌저", "수분 에센스 또는 세럼", "건조한 부위 중심 보습"],
+            "EN": [
+              "Cleanser",
+              "Hydrating essence or serum",
+              "Moisturize focusing on dry areas"
+            ],
+            "FR": [
+              "Nettoyant",
+              "Essence ou sérum hydratant",
+              "Hydrater surtout les zones sèches"
+            ]
+          }
+        },
+        "weeklyCare": {
+          "title": {
+            "KO": "주간/격주 케어",
+            "EN": "Weekly / Bi-weekly Care",
+            "FR": "Soin hebdo / bimensuel"
+          },
+          "items": {
+            "KO": [
+              "주 1회 T존 클레이 마스크",
+              "주 1회 U존 수분 마스크",
+              "계절에 따라 제품 조절"
+            ],
+            "EN": [
+              "Clay mask on the T-zone once a week",
+              "Hydration mask on cheeks once a week",
+              "Adjust products by season"
+            ],
+            "FR": [
+              "Masque à l’argile sur la zone T 1×/semaine",
+              "Masque hydratant sur les joues 1×/semaine",
+              "Adapter selon la saison"
+            ]
+          }
+        },
+        "tip": {
+          "title": {
+            "KO": "SKTI 팁",
+            "EN": "Tip from SKTI",
+            "FR": "Conseil SKTI"
+          },
+          "body": {
+            "KO": "두 가지 피부 성향을 동시에 가지고 있어요 —\n부위별 맞춤 관리가 가장 중요해요.\n\n균형 잡힌 관리 = 균형 잡힌 피부 🎭",
+            "EN": "You have two tendencies at once—zone-specific care matters most.\n\nBalanced routine = balanced skin 🎭",
+            "FR": "Vous avez deux tendances à la fois : le soin par zones est essentiel.\n\nRoutine équilibrée = peau équilibrée 🎭"
+          }
+        }
+      },
+      "recommendationPolicy": {
+        "limit": 3,
+        "strategy": "RULE_BASED",
+        "rules": {
+          "skinTypeMustMatch": true,
+          "preferredCategories": ["TONER", "SERUM", "CREAM", "ESSENCE", "MIST"],
+          "requiredTagsAny": ["LIGHTWEIGHT"],
+          "boostTags": [
+            "HYDRATING",
+            "SOOTHING",
+            "BARRIER_SUPPORT",
+            "OIL_CONTROL"
+          ],
+          "avoidTagsAny": []
+        }
+      }
+    },
+
+    {
+      "skinType": "SC",
+      "title": {
+        "KO": "SKTI 결과 — “트러블정리형” (SC)",
+        "EN": "SKTI Result — “Skin Clarity” (SC)",
+        "FR": "Résultat SKTI — « Peau nette » (SC)"
+      },
+      "sections": {
+        "personality": {
+          "title": { "KO": "성향", "EN": "Personality", "FR": "Profil" },
+          "body": {
+            "KO": "“모공? 피지? 각질? 절대 그냥 두지 않아요!”\n→ 트러블성 / 깔끔한 피부결 선호형",
+            "EN": "“Pores, oil, texture—I can’t ignore any of it.”\n→ Acne-prone / clarity-focused",
+            "FR": "« Pores, sébum, texture — je ne peux pas ignorer ça. »\n→ Peau à imperfections / focus peau nette"
+          }
+        },
+        "skinProfile": {
+          "title": {
+            "KO": "피부 프로필",
+            "EN": "Skin Profile",
+            "FR": "Profil de peau"
+          },
+          "items": [
+            {
+              "label": { "KO": "타입", "EN": "Type", "FR": "Type" },
+              "value": {
+                "KO": "지성 & 트러블성 피부",
+                "EN": "Oily & acne-prone",
+                "FR": "Peau grasse & à imperfections"
+              }
+            },
+            {
+              "label": { "KO": "고민", "EN": "Concern", "FR": "Préoccupation" },
+              "value": {
+                "KO": "여드름, 거친 피부결, 넓은 모공",
+                "EN": "Acne, rough texture, enlarged pores",
+                "FR": "Acné, grain de peau irrégulier, pores dilatés"
+              }
+            },
+            {
+              "label": { "KO": "목표", "EN": "Goal", "FR": "Objectif" },
+              "value": {
+                "KO": "깨끗하고 안정된 피부 상태 유지",
+                "EN": "Keep skin clear and stable",
+                "FR": "Garder une peau nette et stable"
+              }
+            }
+          ]
+        },
+        "goodIngredients": {
+          "title": {
+            "KO": "좋은 성분",
+            "EN": "Good Ingredients for You",
+            "FR": "Ingrédients recommandés"
+          },
+          "rows": [
+            {
+              "category": {
+                "KO": "트러블 케어",
+                "EN": "Acne care",
+                "FR": "Soin anti-imperfections"
+              },
+              "ingredients": {
+                "KO": "살리실산(BHA), 징크 PCA",
+                "EN": "Salicylic acid (BHA), zinc PCA",
+                "FR": "Acide salicylique (BHA), zinc PCA"
+              },
+              "benefits": {
+                "KO": "모공 정리 + 트러블 완화",
+                "EN": "Helps unclog pores + reduce breakouts",
+                "FR": "Aide à désincruster + réduire les imperfections"
+              }
+            },
+            {
+              "category": { "KO": "진정", "EN": "Soothing", "FR": "Apaisant" },
+              "ingredients": {
+                "KO": "티트리, 병풀",
+                "EN": "Tea tree, centella",
+                "FR": "Tea tree, centella"
+              },
+              "benefits": {
+                "KO": "염증 완화",
+                "EN": "Calms inflammation",
+                "FR": "Apaise l’inflammation"
+              }
+            },
+            {
+              "category": {
+                "KO": "피지 밸런스",
+                "EN": "Oil balance",
+                "FR": "Équilibre du sébum"
+              },
+              "ingredients": {
+                "KO": "나이아신아마이드",
+                "EN": "Niacinamide",
+                "FR": "Niacinamide"
+              },
+              "benefits": {
+                "KO": "피지 조절 + 피부 톤 개선",
+                "EN": "Helps regulate oil + improve tone",
+                "FR": "Aide à réguler le sébum + améliorer le teint"
+              }
+            }
+          ]
+        },
+        "avoidIngredients": {
+          "title": {
+            "KO": "피해야 할 성분",
+            "EN": "Ingredients to Avoid",
+            "FR": "Ingrédients à éviter"
+          },
+          "rows": [
+            {
+              "category": {
+                "KO": "코메도제닉 오일",
+                "EN": "Comedogenic oils",
+                "FR": "Huiles comédogènes"
+              },
+              "ingredients": {
+                "KO": "코코넛 오일, 팜 오일",
+                "EN": "Coconut oil, palm oil",
+                "FR": "Huile de coco, huile de palme"
+              },
+              "why": {
+                "KO": "모공 막힘",
+                "EN": "Can clog pores",
+                "FR": "Peuvent boucher les pores"
+              }
+            },
+            {
+              "category": {
+                "KO": "무거운 에몰리언트",
+                "EN": "Heavy emollients",
+                "FR": "Émollients lourds"
+              },
+              "ingredients": {
+                "KO": "라놀린, 미네랄 오일",
+                "EN": "Lanolin, mineral oil",
+                "FR": "Lanoline, huile minérale"
+              },
+              "why": {
+                "KO": "트러블 피부에 과도한 유분",
+                "EN": "Too occlusive for acne-prone skin",
+                "FR": "Trop occlusif pour peau à imperfections"
+              }
+            },
+            {
+              "category": {
+                "KO": "인공 향료",
+                "EN": "Artificial fragrance",
+                "FR": "Parfum"
+              },
+              "ingredients": {
+                "KO": "Parfum",
+                "EN": "Parfum (fragrance)",
+                "FR": "Parfum"
+              },
+              "why": {
+                "KO": "트러블 피부 자극 가능",
+                "EN": "May irritate acne-prone skin",
+                "FR": "Peut irriter une peau sujette aux imperfections"
+              }
+            }
+          ]
+        },
+        "dailyRoutine": {
+          "title": {
+            "KO": "데일리 루틴",
+            "EN": "Daily Routine",
+            "FR": "Routine quotidienne"
+          },
+          "morning": {
+            "KO": [
+              "BHA 또는 티트리 클렌저",
+              "피지 조절 토너",
+              "가벼운 보습제",
+              "논코메도제닉 선크림"
+            ],
+            "EN": [
+              "BHA or tea tree cleanser",
+              "Oil-control toner",
+              "Light moisturizer",
+              "Non-comedogenic sunscreen"
+            ],
+            "FR": [
+              "Nettoyant BHA ou tea tree",
+              "Tonique régulateur de sébum",
+              "Hydratant léger",
+              "Solaire non-comédogène"
+            ]
+          },
+          "evening": {
+            "KO": ["더블 클렌징", "BHA 토너", "진정 세럼", "젤 타입 보습제"],
+            "EN": [
+              "Double cleansing",
+              "BHA toner",
+              "Soothing serum",
+              "Gel moisturizer"
+            ],
+            "FR": [
+              "Double nettoyage",
+              "Tonique BHA",
+              "Sérum apaisant",
+              "Hydratant gel"
+            ]
+          }
+        },
+        "weeklyCare": {
+          "title": {
+            "KO": "주간/격주 케어",
+            "EN": "Weekly / Bi-weekly Care",
+            "FR": "Soin hebdo / bimensuel"
+          },
+          "items": {
+            "KO": [
+              "주 2회 클레이 / 차콜 마스크",
+              "주 1회 효소 각질 케어",
+              "여드름 압출 / 손으로 만지기 피하기"
+            ],
+            "EN": [
+              "Clay/charcoal mask twice a week",
+              "Enzyme exfoliation once a week",
+              "Avoid picking or squeezing"
+            ],
+            "FR": [
+              "Masque argile/charbon 2×/semaine",
+              "Exfoliation enzymatique 1×/semaine",
+              "Éviter de toucher/percer les boutons"
+            ]
+          }
+        },
+        "tip": {
+          "title": {
+            "KO": "SKTI 팁",
+            "EN": "Tip from SKTI",
+            "FR": "Conseil SKTI"
+          },
+          "body": {
+            "KO": "피부는 숨을 쉬어야 회복이 빨라요.\n\n강한 치료보다,\n순하고 꾸준한 관리가 더 효과적이에요 🧼",
+            "EN": "Skin recovers faster when it can “breathe.”\n\nGentle and consistent care beats harsh treatments 🧼",
+            "FR": "La peau récupère plus vite quand elle peut « respirer ».\n\nUne routine douce et régulière vaut mieux que des traitements agressifs 🧼"
+          }
+        }
+      },
+      "recommendationPolicy": {
+        "limit": 3,
+        "strategy": "RULE_BASED",
+        "rules": {
+          "skinTypeMustMatch": true,
+          "preferredCategories": [
+            "PAD",
+            "TONER",
+            "SERUM",
+            "CREAM",
+            "MASK_PACK"
+          ],
+          "requiredTagsAny": ["ACNE_CARE"],
+          "boostTags": [
+            "OIL_CONTROL",
+            "SOOTHING",
+            "LIGHTWEIGHT",
+            "NON_COMEDOGENIC"
+          ],
+          "avoidTagsAny": []
+        }
+      }
+    }
+  ]
+}

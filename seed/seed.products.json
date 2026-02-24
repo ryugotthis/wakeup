@@ -1,0 +1,786 @@
+{
+  "products": [
+    {
+      "slug": "anua-heartleaf-77-soothing-toner",
+      "brand": "ANUA",
+      "category": "TONER",
+      "imageUrl": null,
+      "skinTypes": ["HS", "SC", "CC"],
+      "inci": null,
+      "hsScore": null,
+      "translations": {
+        "KO": {
+          "name": "아누아 어성초 77% 수딩 토너",
+          "description": "진정/밸런스 중심의 데일리 토너"
+        },
+        "EN": {
+          "name": "ANUA Heartleaf 77% Soothing Toner",
+          "description": "Daily toner focused on soothing and balance"
+        },
+        "FR": {
+          "name": "ANUA Tonique apaisant Heartleaf 77%",
+          "description": "Tonique quotidien axé sur l’apaisement et l’équilibre"
+        }
+      },
+      "tags": [
+        {
+          "code": "SOOTHING",
+          "priority": 1
+        },
+        {
+          "code": "GENTLE",
+          "priority": 2
+        },
+        {
+          "code": "BARRIER_SUPPORT",
+          "priority": 100
+        }
+      ]
+    },
+    {
+      "slug": "round-lab-1025-dokdo-toner",
+      "brand": "Round Lab",
+      "category": "TONER",
+      "imageUrl": null,
+      "skinTypes": ["HS", "CC", "DS"],
+      "inci": null,
+      "hsScore": null,
+      "translations": {
+        "KO": {
+          "name": "라운드랩 1025 독도 토너",
+          "description": "가볍게 정돈하면서 수분감을 채우는 토너"
+        },
+        "EN": {
+          "name": "Round Lab 1025 Dokdo Toner",
+          "description": "Light toner that refines and hydrates"
+        },
+        "FR": {
+          "name": "Round Lab Tonique 1025 Dokdo",
+          "description": "Tonique léger qui hydrate et affine le grain de peau"
+        }
+      },
+      "tags": [
+        {
+          "code": "HYDRATING",
+          "priority": 1
+        },
+        {
+          "code": "GENTLE",
+          "priority": 2
+        },
+        {
+          "code": "SOOTHING",
+          "priority": 100
+        }
+      ]
+    },
+    {
+      "slug": "isntree-hyaluronic-acid-toner",
+      "brand": "Isntree",
+      "category": "TONER",
+      "imageUrl": null,
+      "skinTypes": ["DS", "CC", "HS"],
+      "inci": null,
+      "hsScore": null,
+      "translations": {
+        "KO": {
+          "name": "이즈앤트리 히알루론산 토너",
+          "description": "수분감 중심의 토너"
+        },
+        "EN": {
+          "name": "Isntree Hyaluronic Acid Toner",
+          "description": "Hydration-focused toner"
+        },
+        "FR": {
+          "name": "Isntree Tonique à l’acide hyaluronique",
+          "description": "Tonique axé sur l’hydratation"
+        }
+      },
+      "tags": [
+        {
+          "code": "HYDRATING",
+          "priority": 1
+        },
+        {
+          "code": "BARRIER_SUPPORT",
+          "priority": 100
+        }
+      ]
+    },
+    {
+      "slug": "abib-heartleaf-spot-pad-calming-touch",
+      "brand": "Abib",
+      "category": "PAD",
+      "imageUrl": null,
+      "skinTypes": ["HS", "SC", "CC"],
+      "inci": null,
+      "hsScore": null,
+      "translations": {
+        "KO": {
+          "name": "아비브 어성초 스팟 패드 카밍 터치",
+          "description": "민감/트러블 고민에 맞춘 진정 패드"
+        },
+        "EN": {
+          "name": "Abib Heartleaf Spot Pad Calming Touch",
+          "description": "Soothing pads for sensitive/breakout-prone skin"
+        },
+        "FR": {
+          "name": "Abib Pads apaisants Heartleaf",
+          "description": "Pads apaisants pour peaux sensibles/sujettes aux imperfections"
+        }
+      },
+      "tags": [
+        {
+          "code": "SOOTHING",
+          "priority": 1
+        },
+        {
+          "code": "GENTLE",
+          "priority": 2
+        },
+        {
+          "code": "ACNE_CARE",
+          "priority": 100
+        }
+      ]
+    },
+    {
+      "slug": "cosrx-bha-blackhead-power-liquid",
+      "brand": "COSRX",
+      "category": "TONER",
+      "imageUrl": null,
+      "skinTypes": ["OB", "SC"],
+      "inci": null,
+      "hsScore": null,
+      "translations": {
+        "KO": {
+          "name": "코스알엑스 BHA 블랙헤드 파워 리퀴드",
+          "description": "피지/블랙헤드 케어에 초점을 둔 토너 타입 제품"
+        },
+        "EN": {
+          "name": "COSRX BHA Blackhead Power Liquid",
+          "description": "Toner-like treatment focused on oil and blackheads"
+        },
+        "FR": {
+          "name": "COSRX Liquide BHA anti-points noirs",
+          "description": "Soin type tonique axé sur l’excès de sébum et les points noirs"
+        }
+      },
+      "tags": [
+        {
+          "code": "OIL_CONTROL",
+          "priority": 1
+        },
+        {
+          "code": "ACNE_CARE",
+          "priority": 2
+        },
+        {
+          "code": "LIGHTWEIGHT",
+          "priority": 100
+        }
+      ]
+    },
+    {
+      "slug": "torriden-dive-in-hyaluronic-acid-serum",
+      "brand": "Torriden",
+      "category": "SERUM",
+      "imageUrl": null,
+      "skinTypes": ["DS", "CC", "HS"],
+      "inci": null,
+      "hsScore": null,
+      "translations": {
+        "KO": {
+          "name": "토리든 다이브인 저분자 히알루론산 세럼",
+          "description": "가볍게 흡수되는 수분 세럼"
+        },
+        "EN": {
+          "name": "Torriden DIVE-IN Hyaluronic Acid Serum",
+          "description": "Lightweight hydrating serum"
+        },
+        "FR": {
+          "name": "Torriden Sérum hyaluronique DIVE-IN",
+          "description": "Sérum hydratant à texture légère"
+        }
+      },
+      "tags": [
+        {
+          "code": "HYDRATING",
+          "priority": 1
+        },
+        {
+          "code": "LIGHTWEIGHT",
+          "priority": 2
+        },
+        {
+          "code": "SOOTHING",
+          "priority": 100
+        }
+      ]
+    },
+    {
+      "slug": "skin1004-madagascar-centella-ampoule",
+      "brand": "SKIN1004",
+      "category": "AMPOULE",
+      "imageUrl": null,
+      "skinTypes": ["HS", "SC", "CC"],
+      "inci": null,
+      "hsScore": null,
+      "translations": {
+        "KO": {
+          "name": "스킨1004 마다가스카르 센텔라 앰플",
+          "description": "진정/밸런스에 초점을 둔 앰플"
+        },
+        "EN": {
+          "name": "SKIN1004 Madagascar Centella Ampoule",
+          "description": "Ampoule focused on soothing and balance"
+        },
+        "FR": {
+          "name": "SKIN1004 Ampoule Centella",
+          "description": "Ampoule axée sur l’apaisement et l’équilibre"
+        }
+      },
+      "tags": [
+        {
+          "code": "SOOTHING",
+          "priority": 1
+        },
+        {
+          "code": "GENTLE",
+          "priority": 2
+        },
+        {
+          "code": "BARRIER_SUPPORT",
+          "priority": 100
+        }
+      ]
+    },
+    {
+      "slug": "purito-centella-unscented-serum",
+      "brand": "PURITO",
+      "category": "SERUM",
+      "imageUrl": null,
+      "skinTypes": ["HS", "CC"],
+      "inci": null,
+      "hsScore": null,
+      "translations": {
+        "KO": {
+          "name": "퓨리토 센텔라 언센티드 세럼",
+          "description": "민감 피부를 고려한 진정/장벽 세럼"
+        },
+        "EN": {
+          "name": "PURITO Centella Unscented Serum",
+          "description": "Soothing/barrier serum designed with sensitive skin in mind"
+        },
+        "FR": {
+          "name": "PURITO Sérum Centella (sans parfum)",
+          "description": "Sérum apaisant/barrière pensé pour peaux sensibles"
+        }
+      },
+      "tags": [
+        {
+          "code": "GENTLE",
+          "priority": 1
+        },
+        {
+          "code": "BARRIER_SUPPORT",
+          "priority": 2
+        },
+        {
+          "code": "SOOTHING",
+          "priority": 3
+        }
+      ]
+    },
+    {
+      "slug": "innisfree-green-tea-seed-serum",
+      "brand": "Innisfree",
+      "category": "SERUM",
+      "imageUrl": null,
+      "skinTypes": ["CC", "DS"],
+      "inci": null,
+      "hsScore": null,
+      "translations": {
+        "KO": {
+          "name": "이니스프리 그린티 씨드 세럼",
+          "description": "데일리 보습/수분감 중심의 세럼"
+        },
+        "EN": {
+          "name": "Innisfree Green Tea Seed Serum",
+          "description": "Daily hydrating serum"
+        },
+        "FR": {
+          "name": "Innisfree Sérum aux graines de thé vert",
+          "description": "Sérum hydratant pour un usage quotidien"
+        }
+      },
+      "tags": [
+        {
+          "code": "HYDRATING",
+          "priority": 1
+        },
+        {
+          "code": "BARRIER_SUPPORT",
+          "priority": 100
+        }
+      ]
+    },
+    {
+      "slug": "cosrx-advanced-snail-96-mucin-essence",
+      "brand": "COSRX",
+      "category": "ESSENCE",
+      "imageUrl": null,
+      "skinTypes": ["DS", "HS", "CC"],
+      "inci": null,
+      "hsScore": null,
+      "translations": {
+        "KO": {
+          "name": "코스알엑스 어드밴스드 스네일 96 뮤신 에센스",
+          "description": "보습감과 편안한 사용감을 주는 에센스"
+        },
+        "EN": {
+          "name": "COSRX Advanced Snail 96 Mucin Essence",
+          "description": "Essence for comfortable hydration"
+        },
+        "FR": {
+          "name": "COSRX Essence mucine d’escargot 96",
+          "description": "Essence pour une hydratation confortable"
+        }
+      },
+      "tags": [
+        {
+          "code": "HYDRATING",
+          "priority": 1
+        },
+        {
+          "code": "SOOTHING",
+          "priority": 2
+        },
+        {
+          "code": "BARRIER_SUPPORT",
+          "priority": 100
+        }
+      ]
+    },
+    {
+      "slug": "beauty-of-joseon-red-bean-water-gel",
+      "brand": "Beauty of Joseon",
+      "category": "CREAM",
+      "imageUrl": null,
+      "skinTypes": ["OB", "CC"],
+      "inci": null,
+      "hsScore": null,
+      "translations": {
+        "KO": {
+          "name": "뷰티오브조선 레드빈 워터 젤",
+          "description": "가볍게 마무리되는 젤 크림"
+        },
+        "EN": {
+          "name": "Beauty of Joseon Red Bean Water Gel",
+          "description": "Light gel moisturizer"
+        },
+        "FR": {
+          "name": "Beauty of Joseon Gel hydratant Red Bean",
+          "description": "Gel-crème hydratant à texture légère"
+        }
+      },
+      "tags": [
+        {
+          "code": "LIGHTWEIGHT",
+          "priority": 1
+        },
+        {
+          "code": "OIL_CONTROL",
+          "priority": 2
+        },
+        {
+          "code": "HYDRATING",
+          "priority": 100
+        }
+      ]
+    },
+    {
+      "slug": "dr-jart-cicapair-tiger-grass-cream",
+      "brand": "Dr.Jart+",
+      "category": "CREAM",
+      "imageUrl": null,
+      "skinTypes": ["HS", "CC"],
+      "inci": null,
+      "hsScore": null,
+      "translations": {
+        "KO": {
+          "name": "닥터자르트 시카페어 타이거 그래스 크림",
+          "description": "민감할 때 편안한 사용감을 목표로 한 크림"
+        },
+        "EN": {
+          "name": "Dr.Jart+ Cicapair Tiger Grass Cream",
+          "description": "Cream designed for a calm, comfortable feel"
+        },
+        "FR": {
+          "name": "Dr.Jart+ Crème Cicapair",
+          "description": "Crème conçue pour apaiser et réconforter la peau"
+        }
+      },
+      "tags": [
+        {
+          "code": "SOOTHING",
+          "priority": 1
+        },
+        {
+          "code": "BARRIER_SUPPORT",
+          "priority": 2
+        },
+        {
+          "code": "GENTLE",
+          "priority": 100
+        }
+      ]
+    },
+    {
+      "slug": "aestura-atobarrier-365-cream",
+      "brand": "AESTURA",
+      "category": "CREAM",
+      "imageUrl": null,
+      "skinTypes": ["HS", "DS"],
+      "inci": null,
+      "hsScore": null,
+      "translations": {
+        "KO": {
+          "name": "에스트라 아토베리어 365 크림",
+          "description": "장벽/보습 중심의 크림"
+        },
+        "EN": {
+          "name": "AESTURA Atobarrier 365 Cream",
+          "description": "Barrier-focused moisturizing cream"
+        },
+        "FR": {
+          "name": "AESTURA Crème Atobarrier 365",
+          "description": "Crème hydratante axée barrière cutanée"
+        }
+      },
+      "tags": [
+        {
+          "code": "BARRIER_SUPPORT",
+          "priority": 1
+        },
+        {
+          "code": "HYDRATING",
+          "priority": 2
+        },
+        {
+          "code": "GENTLE",
+          "priority": 100
+        }
+      ]
+    },
+    {
+      "slug": "cosrx-oil-free-ultra-moisturizing-lotion",
+      "brand": "COSRX",
+      "category": "CREAM",
+      "imageUrl": null,
+      "skinTypes": ["CC", "OB", "HS"],
+      "inci": null,
+      "hsScore": null,
+      "translations": {
+        "KO": {
+          "name": "코스알엑스 오일-프리 울트라 모이스처라이징 로션",
+          "description": "가볍게 보습감을 주는 로션 타입 보습제"
+        },
+        "EN": {
+          "name": "COSRX Oil-Free Ultra-Moisturizing Lotion",
+          "description": "Light moisturizer for comfortable hydration"
+        },
+        "FR": {
+          "name": "COSRX Lotion hydratante légère (oil-free)",
+          "description": "Hydratant léger pour un confort au quotidien"
+        }
+      },
+      "tags": [
+        {
+          "code": "LIGHTWEIGHT",
+          "priority": 1
+        },
+        {
+          "code": "HYDRATING",
+          "priority": 2
+        },
+        {
+          "code": "GENTLE",
+          "priority": 100
+        }
+      ]
+    },
+    {
+      "slug": "d-alba-white-truffle-first-spray-serum",
+      "brand": "d'Alba",
+      "category": "MIST",
+      "imageUrl": null,
+      "skinTypes": ["DS", "CC"],
+      "inci": null,
+      "hsScore": null,
+      "translations": {
+        "KO": {
+          "name": "달바 화이트 트러플 퍼스트 스프레이 세럼",
+          "description": "미스트 형태로 수분/윤광 연출을 돕는 제품"
+        },
+        "EN": {
+          "name": "d'Alba White Truffle First Spray Serum",
+          "description": "Mist-type serum for hydration and glow"
+        },
+        "FR": {
+          "name": "d'Alba Brume-sérum White Truffle",
+          "description": "Brume-sérum pour hydratation et éclat"
+        }
+      },
+      "tags": [
+        {
+          "code": "HYDRATING",
+          "priority": 1
+        },
+        {
+          "code": "SOOTHING",
+          "priority": 100
+        }
+      ]
+    },
+    {
+      "slug": "laneige-cream-skin-mist",
+      "brand": "LANEIGE",
+      "category": "MIST",
+      "imageUrl": null,
+      "skinTypes": ["DS", "CC"],
+      "inci": null,
+      "hsScore": null,
+      "translations": {
+        "KO": {
+          "name": "라네즈 크림 스킨 미스트",
+          "description": "보습감을 더해주는 미스트"
+        },
+        "EN": {
+          "name": "LANEIGE Cream Skin Mist",
+          "description": "Moisture-boosting mist"
+        },
+        "FR": {
+          "name": "LANEIGE Brume Cream Skin",
+          "description": "Brume qui booste l’hydratation"
+        }
+      },
+      "tags": [
+        {
+          "code": "HYDRATING",
+          "priority": 1
+        },
+        {
+          "code": "BARRIER_SUPPORT",
+          "priority": 100
+        }
+      ]
+    },
+    {
+      "slug": "sulwhasoo-first-care-activating-serum-oil",
+      "brand": "Sulwhasoo",
+      "category": "OIL",
+      "imageUrl": null,
+      "skinTypes": ["DS"],
+      "inci": null,
+      "hsScore": null,
+      "translations": {
+        "KO": {
+          "name": "설화수 퍼스트케어 세럼 (오일/리치 케어 포지션)",
+          "description": "리치한 케어를 선호하는 루틴에 어울리는 제품(포지셔닝)"
+        },
+        "EN": {
+          "name": "Sulwhasoo First Care (rich-care positioning)",
+          "description": "Positioned for richer routines"
+        },
+        "FR": {
+          "name": "Sulwhasoo First Care (positionnement riche)",
+          "description": "Positionné pour des routines plus riches"
+        }
+      },
+      "tags": [
+        {
+          "code": "BARRIER_SUPPORT",
+          "priority": 1
+        },
+        {
+          "code": "HYDRATING",
+          "priority": 2
+        }
+      ]
+    },
+    {
+      "slug": "mediheal-tea-tree-essential-mask",
+      "brand": "Mediheal",
+      "category": "MASK_PACK",
+      "imageUrl": null,
+      "skinTypes": ["SC", "OB"],
+      "inci": null,
+      "hsScore": null,
+      "translations": {
+        "KO": {
+          "name": "메디힐 티트리 에센셜 마스크",
+          "description": "트러블/피지 고민에 맞춘 마스크팩 포지션"
+        },
+        "EN": {
+          "name": "Mediheal Tea Tree Essential Mask",
+          "description": "Mask positioned for blemish and oil concerns"
+        },
+        "FR": {
+          "name": "Mediheal Masque Tea Tree",
+          "description": "Masque positionné pour imperfections et excès de sébum"
+        }
+      },
+      "tags": [
+        {
+          "code": "ACNE_CARE",
+          "priority": 1
+        },
+        {
+          "code": "SOOTHING",
+          "priority": 2
+        },
+        {
+          "code": "GENTLE",
+          "priority": 100
+        }
+      ]
+    },
+    {
+      "slug": "dr-jart-dermask-soothing-hydra-solution-mask",
+      "brand": "Dr.Jart+",
+      "category": "MASK_PACK",
+      "imageUrl": null,
+      "skinTypes": ["HS", "DS", "CC"],
+      "inci": null,
+      "hsScore": null,
+      "translations": {
+        "KO": {
+          "name": "닥터자르트 더마스크 수딩/하이드라 솔루션 마스크",
+          "description": "수분/진정 중심의 마스크팩"
+        },
+        "EN": {
+          "name": "Dr.Jart+ Dermask Soothing/Hydra Solution Mask",
+          "description": "Mask focused on hydration and soothing"
+        },
+        "FR": {
+          "name": "Dr.Jart+ Masque Dermask hydratant/apaisant",
+          "description": "Masque axé sur hydratation et apaisement"
+        }
+      },
+      "tags": [
+        {
+          "code": "HYDRATING",
+          "priority": 1
+        },
+        {
+          "code": "SOOTHING",
+          "priority": 2
+        }
+      ]
+    },
+    {
+      "slug": "abib-gummy-sheet-mask-heartleaf-sticker",
+      "brand": "Abib",
+      "category": "MASK_PACK",
+      "imageUrl": null,
+      "skinTypes": ["HS", "CC"],
+      "inci": null,
+      "hsScore": null,
+      "translations": {
+        "KO": {
+          "name": "아비브 구미 시트 마스크 어성초 스티커",
+          "description": "진정/편안한 사용감 중심의 마스크팩"
+        },
+        "EN": {
+          "name": "Abib Gummy Sheet Mask Heartleaf Sticker",
+          "description": "Soothing sheet mask positioning"
+        },
+        "FR": {
+          "name": "Abib Masque tissu Heartleaf",
+          "description": "Masque tissu axé apaisement"
+        }
+      },
+      "tags": [
+        {
+          "code": "SOOTHING",
+          "priority": 1
+        },
+        {
+          "code": "GENTLE",
+          "priority": 2
+        }
+      ]
+    },
+    {
+      "slug": "laneige-water-sleeping-mask",
+      "brand": "LANEIGE",
+      "category": "MASK_PACK",
+      "imageUrl": null,
+      "skinTypes": ["DS", "CC"],
+      "inci": null,
+      "hsScore": null,
+      "translations": {
+        "KO": {
+          "name": "라네즈 워터 슬리핑 마스크",
+          "description": "수분감을 채우는 슬리핑 마스크"
+        },
+        "EN": {
+          "name": "LANEIGE Water Sleeping Mask",
+          "description": "Sleeping mask focused on hydration"
+        },
+        "FR": {
+          "name": "LANEIGE Masque de nuit hydratant",
+          "description": "Masque de nuit axé sur l’hydratation"
+        }
+      },
+      "tags": [
+        {
+          "code": "HYDRATING",
+          "priority": 1
+        },
+        {
+          "code": "BARRIER_SUPPORT",
+          "priority": 100
+        }
+      ]
+    },
+    {
+      "slug": "cosrx-the-6-peptide-skin-booster-serum",
+      "brand": "COSRX",
+      "category": "SERUM",
+      "imageUrl": null,
+      "skinTypes": ["DS", "CC", "HS"],
+      "inci": null,
+      "hsScore": null,
+      "translations": {
+        "KO": {
+          "name": "코스알엑스 더 6 펩타이드 스킨 부스터 세럼",
+          "description": "가볍게 레이어링하기 좋은 부스터 세럼"
+        },
+        "EN": {
+          "name": "COSRX The 6 Peptide Skin Booster Serum",
+          "description": "Light booster serum for easy layering"
+        },
+        "FR": {
+          "name": "COSRX Sérum booster 6 peptides",
+          "description": "Sérum booster léger, facile à superposer"
+        }
+      },
+      "tags": [
+        {
+          "code": "HYDRATING",
+          "priority": 1
+        },
+        {
+          "code": "LIGHTWEIGHT",
+          "priority": 2
+        },
+        {
+          "code": "BARRIER_SUPPORT",
+          "priority": 100
+        }
+      ]
+    }
+  ]
+}

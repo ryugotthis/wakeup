@@ -1,0 +1,152 @@
+{
+  "group": "preference",
+  "version": 2,
+  "questions": [
+    {
+      "code": "Q14",
+      "order": 14,
+      "weight": 0.5,
+      "text": {
+        "KO": "성분표를 자주 확인하나요?",
+        "EN": "Do you often check ingredient lists?",
+        "FR": "Vérifiez-vous souvent la liste des ingrédients ?"
+      },
+      "options": [
+        {
+          "id": "Q14_A",
+          "text": {
+            "KO": "거의 확인하지 않는다",
+            "EN": "Rarely check",
+            "FR": "Je vérifie rarement"
+          },
+          "skinType": null
+        },
+        {
+          "id": "Q14_B",
+          "text": {
+            "KO": "항상 확인한다",
+            "EN": "Always check",
+            "FR": "Je vérifie toujours"
+          },
+          "skinType": "HS"
+        }
+      ]
+    },
+
+    {
+      "code": "Q15",
+      "order": 15,
+      "weight": 1,
+      "text": {
+        "KO": "제품 선택 시 더 중요한 것은 무엇인가요?",
+        "EN": "What matters most when choosing skincare?",
+        "FR": "Qu’est-ce qui compte le plus lors du choix d’un soin ?"
+      },
+      "options": [
+        {
+          "id": "Q15_A",
+          "text": {
+            "KO": "트러블 케어",
+            "EN": "Acne care",
+            "FR": "Soin anti-imperfections"
+          },
+          "skinType": "SC"
+        },
+        {
+          "id": "Q15_B",
+          "text": {
+            "KO": "보습",
+            "EN": "Hydration",
+            "FR": "Hydratation"
+          },
+          "skinType": "DS"
+        },
+        {
+          "id": "Q15_C",
+          "text": {
+            "KO": "피지 조절",
+            "EN": "Oil control",
+            "FR": "Contrôle du sébum"
+          },
+          "skinType": "OB"
+        },
+        {
+          "id": "Q15_D",
+          "text": {
+            "KO": "밸런스",
+            "EN": "Balance",
+            "FR": "Équilibre"
+          },
+          "skinType": "CC"
+        },
+        {
+          "id": "Q15_E",
+          "text": {
+            "KO": "저자극",
+            "EN": "Gentle ingredients",
+            "FR": "Ingrédients doux"
+          },
+          "skinType": "HS"
+        }
+      ]
+    },
+
+    {
+      "code": "TIEBREAKER",
+      "order": 18,
+      "weight": 4,
+      "text": {
+        "KO": "내가 원하는 이상적인 피부 상태는 무엇인가요?",
+        "EN": "What is your ideal skin condition?",
+        "FR": "Quel est votre état de peau idéal ?"
+      },
+      "options": [
+        {
+          "id": "TIEBREAKER_A",
+          "text": {
+            "KO": "균형 잡힌 피부",
+            "EN": "Balanced skin",
+            "FR": "Peau équilibrée"
+          },
+          "skinType": "CC"
+        },
+        {
+          "id": "TIEBREAKER_B",
+          "text": {
+            "KO": "깨끗한 피부",
+            "EN": "Clear skin",
+            "FR": "Peau nette"
+          },
+          "skinType": "SC"
+        },
+        {
+          "id": "TIEBREAKER_C",
+          "text": {
+            "KO": "산뜻한 피부",
+            "EN": "Fresh matte skin",
+            "FR": "Peau mate et fraîche"
+          },
+          "skinType": "OB"
+        },
+        {
+          "id": "TIEBREAKER_D",
+          "text": {
+            "KO": "촉촉한 피부",
+            "EN": "Hydrated glowing skin",
+            "FR": "Peau hydratée et lumineuse"
+          },
+          "skinType": "DS"
+        },
+        {
+          "id": "TIEBREAKER_E",
+          "text": {
+            "KO": "자극 없는 건강한 피부",
+            "EN": "Healthy calm skin",
+            "FR": "Peau saine et apaisée"
+          },
+          "skinType": "HS"
+        }
+      ]
+    }
+  ]
+}

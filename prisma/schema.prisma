@@ -1,0 +1,396 @@
+/**
+ * 역할: WakeUp(피부 타입 테스트/추천) 서비스의 **전체 DB 스키마(Prisma)** 정의 파일.
+ *
+ * - DB 연결(datsource)과 Prisma Client 생성기(generator) 설정
+ * - 다국어(Locale) 및 도메인 Enum(피부타입/카테고리/태그/질문코드) 정의
+ * - 사용자(User), 제품(Product), 태그(Tag) 및 번역 테이블(Translation) 구조
+ * - 피부 테스트 결과(TestResult) 저장 + 공유 링크(ShareResult) + 저장(SavedResult)
+ * - 결과에 포함된 추천 3개 스냅샷(TestResultRecommendedProduct)
+ * - 유저 북마크(Bookmark), 리뷰(Review)
+ * - 테스트 질문(TestQuestion) / 선택지(TestChoice) / 선택지 영향치(TestChoiceImpact) DB 구조
+ */
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+//
+// ENUMS
+//
+
+enum Locale {
+  KO
+  EN
+  FR
+}
+
+enum SkinTypeCode {
+  DS
+  OB
+  HS
+  CC
+  SC
+}
+
+enum ProductCategory {
+  TONER
+  PAD
+  ESSENCE
+  SERUM
+  AMPOULE
+  CREAM
+  MIST
+  OIL
+  MASK_PACK
+}
+
+enum TagCode {
+  // ✅ Safety / Sensitive
+  FRAGRANCE_FREE
+  ESSENTIAL_OIL_FREE
+  ALCOHOL_FREE
+  GENTLE
+
+  // ✅ Barrier / Hydration
+  BARRIER_SUPPORT
+  HYDRATING
+  SOOTHING
+
+  // ✅ Texture / Oil
+  LIGHTWEIGHT
+  OIL_CONTROL
+
+  // ✅ Acne / Condition
+  ACNE_CARE
+  LOW_PH
+  NON_COMEDOGENIC
+}
+
+//
+// MODELS
+//
+
+model User {
+  id        String   @id @db.Uuid
+  email     String?  @unique
+  name      String?
+  avatarUrl String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  testResults   TestResult[]
+  savedResults  SavedResult[]
+  bookmarks     Bookmark[]
+  reviews       Review[]
+}
+
+model Product {
+  id          String          @id @default(uuid()) @db.Uuid
+  slug        String          @unique
+  brand       String?
+  category    ProductCategory
+  imageUrl    String?
+  isPublished Boolean         @default(true)
+
+  inci        String?         @db.Text
+  hsScore     Int?
+
+  skinTypes   SkinTypeCode[]
+
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  translations ProductTranslation[]
+  tags         ProductTag[]
+  bookmarks    Bookmark[]
+  reviews      Review[]
+
+  recommendedIn TestResultRecommendedProduct[]
+
+  @@index([category])
+  @@index([brand])
+}
+
+model ProductTranslation {
+  id          String  @id @default(uuid()) @db.Uuid
+  productId   String  @db.Uuid
+  locale      Locale
+
+  name        String
+  description String?
+
+  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, locale])
+  @@index([locale])
+}
+
+model Tag {
+  id           String   @id @default(uuid()) @db.Uuid
+  code         TagCode  @unique
+  createdAt    DateTime @default(now())
+
+  translations TagTranslation[]
+  products     ProductTag[]
+}
+
+model TagTranslation {
+  id          String  @id @default(uuid()) @db.Uuid
+  tagId       String  @db.Uuid
+  locale      Locale
+
+  label       String
+  description String?
+
+  tag         Tag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@unique([tagId, locale])
+  @@index([locale])
+}
+
+model ProductTag {
+  productId String @db.Uuid
+  tagId     String @db.Uuid
+
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  priority  Int     @default(100)
+
+  @@id([productId, tagId])
+  @@index([tagId])
+}
+
+model TestResult {
+  id        String       @id @default(uuid()) @db.Uuid
+
+  userId    String?      @db.Uuid
+  user      User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  skinType  SkinTypeCode
+
+  // 프론트 answers 원본 저장 (예: { Q1: "Q1_A", ... })
+  answers   Json
+  // 계산된 점수(DS/OB/HS/CC/SC)
+  scores    Json?
+  // optional: tieBreakerUsed, topTypes 등 디버깅/분석용
+  metrics   Json?
+
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  // 공유 링크(여러 개 만들 수도 있음)
+  shareLinks ShareResult[]
+
+  // 그 테스트 결과에서 실제로 보여준 "추천 3개" 스냅샷
+  recommendedProducts TestResultRecommendedProduct[]
+
+  // 공유에서 "저장하기" 누른 유저들 기록
+  savedBy SavedResult[]
+
+  @@index([skinType])
+  @@index([userId])
+}
+
+model ShareResult {
+  id           String     @id @default(uuid()) @db.Uuid
+  token        String     @unique
+
+  // 공유 링크는 특정 TestResult를 가리키는 구조 (가장 깔끔/안전)
+  testResultId String     @db.Uuid
+  testResult   TestResult @relation(fields: [testResultId], references: [id], onDelete: Cascade)
+
+  // 공유 페이지에서 보여줄 "일부 결과" snapshot (dailyRoutine / weeklyCare 제외)
+  publicPayload Json
+
+  isPublic     Boolean    @default(true)
+  revokedAt    DateTime?
+  expiresAt    DateTime?  // optional: 만료 기능
+
+  viewCount    Int        @default(0)
+  lastViewedAt DateTime?
+
+  createdAt    DateTime   @default(now())
+
+  @@index([testResultId])
+}
+
+model SavedResult {
+  id           String     @id @default(uuid()) @db.Uuid
+
+  userId       String     @db.Uuid
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  testResultId String     @db.Uuid
+  testResult   TestResult @relation(fields: [testResultId], references: [id], onDelete: Cascade)
+
+  createdAt    DateTime   @default(now())
+
+  @@unique([userId, testResultId])
+  @@index([testResultId])
+}
+
+// 테스트 결과에 포함될 "추천 제품 3개" 스냅샷
+model TestResultRecommendedProduct {
+  id           String    @id @default(uuid()) @db.Uuid
+
+  testResultId String    @db.Uuid
+  testResult   TestResult @relation(fields: [testResultId], references: [id], onDelete: Cascade)
+
+  productId    String    @db.Uuid
+  product      Product   @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  // 1,2,3
+  rank         Int
+
+  // optional: "왜 추천인지" 한 줄 메모
+  reason       String?   @db.Text
+
+  createdAt    DateTime  @default(now())
+
+  @@unique([testResultId, rank])
+  @@index([productId])
+}
+
+model Bookmark {
+  id        String   @id @default(uuid()) @db.Uuid
+
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  productId String   @db.Uuid
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
+  @@index([productId])
+}
+
+model Review {
+  id        String   @id @default(uuid()) @db.Uuid
+
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  productId String   @db.Uuid
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  rating    Int
+  content   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, productId])
+  @@index([productId, createdAt])
+}
+
+//
+// ✅ TEST (질문/선택지) DB
+//
+
+// Q1~Q18 + 타이브레이커(TIEBREAKER)
+enum TestQuestionCode {
+  Q1
+  Q2
+  Q3
+  Q4
+  Q5
+  Q6
+  Q7
+  Q8
+  Q9
+  Q10
+  Q11
+  Q12
+  Q13
+  Q14
+  Q15
+  Q16
+  Q17
+  TIEBREAKER
+}
+
+model TestQuestion {
+  id           String            @id @default(uuid()) @db.Uuid
+  code         TestQuestionCode  @unique
+
+  // UI/정렬: Q1=1 ... Q17=17, 타이브레이커=18
+  order        Int               @unique
+
+  // 점수 가중치 (타이브레이커는 동점 시 결정용으로 더 크게 줄 수도 있음)
+  weight       Float             @default(1)
+
+  // 타이브레이커 여부
+  isTiebreaker Boolean           @default(false)
+
+  translations TestQuestionTranslation[]
+  choices      TestChoice[]
+
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+}
+
+model TestQuestionTranslation {
+  id          String    @id @default(uuid()) @db.Uuid
+  questionId  String    @db.Uuid
+  locale      Locale
+  text        String
+
+  question    TestQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([questionId, locale])
+  @@index([locale])
+}
+
+model TestChoice {
+  id           String   @id @default(uuid()) @db.Uuid
+  questionId   String   @db.Uuid
+
+  // 질문 안에서 보기 순서
+  order        Int
+
+  // 선택지 키(식별자): "A", "B" ... 권장
+  key          String
+
+  translations TestChoiceTranslation[]
+  impacts      TestChoiceImpact[]
+
+  question     TestQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([questionId, order])
+  @@index([questionId])
+}
+
+model TestChoiceTranslation {
+  id        String   @id @default(uuid()) @db.Uuid
+  choiceId  String   @db.Uuid
+  locale    Locale
+  text      String
+
+  choice    TestChoice @relation(fields: [choiceId], references: [id], onDelete: Cascade)
+
+  @@unique([choiceId, locale])
+  @@index([locale])
+}
+
+// 선택지가 타입에 주는 영향 (지금은 0~1개만 있어도 OK)
+model TestChoiceImpact {
+  id        String       @id @default(uuid()) @db.Uuid
+  choiceId  String       @db.Uuid
+
+  skinType  SkinTypeCode
+  delta     Float        @default(1)
+
+  choice    TestChoice   @relation(fields: [choiceId], references: [id], onDelete: Cascade)
+
+  @@index([skinType])
+  @@unique([choiceId, skinType])
+}
