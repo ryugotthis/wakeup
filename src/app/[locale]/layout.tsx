@@ -1,18 +1,12 @@
-// app/[locale]/layout.tsx
-import { notFound } from "next/navigation";
-import { SUPPORTED_LOCALES, type Locale } from "@/app/lib/i18n/config";
-// @/lib/i18n/config
+import { cookies } from "next/headers";
 
-export default async function LocaleLayout({
+export default async function RootLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-
-  if (!SUPPORTED_LOCALES.includes(locale as Locale)) notFound();
+  const cookieStore = await cookies();
+  const locale = cookieStore.get("locale")?.value ?? "en";
 
   return (
     <html lang={locale}>
