@@ -1,6 +1,19 @@
-export default {
+// src/app/lib/i18n/dictionaries/fr.ts
+
+const fr = {
   home: {
-    title: "WakeUp",
-    description: "Trouve les soins adaptés à ta peau",
+    description: "Trouvez les soins adaptés à votre peau.",
+    ctaPrimary: "Découvrir mon type de peau (SKTI)",
+    ctaSecondary: "Explorer les produits",
+    ctaSubtext: "1 minute · Diagnostic gratuit",
+    howTitle: "Comment fonctionne WakeUp",
+    steps: [
+      "Passer le test SKTI",
+      "Obtenir votre type de peau",
+      "Trouver votre routine",
+      "Acheter des produits",
+    ],
   },
-};
+} as const;
+
+export default fr;
