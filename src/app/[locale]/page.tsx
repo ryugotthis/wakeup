@@ -1,4 +1,5 @@
 import LoginButton from "@/components/LoginButton";
+import LogoutButton from "@/components/LogoutButton";
 import { createClient } from "@/app/lib/supabase/server";
 
 export default async function Page({
@@ -14,18 +15,19 @@ export default async function Page({
   } = await supabase.auth.getUser();
 
   return (
-    <main style={{ padding: 24 }}>
+    <main className="p-6 space-y-4">
       <h1>Home ({locale})</h1>
 
-      <div style={{ marginTop: 16 }}>
-        {user ? (
-          <div style={{ fontSize: 14 }}>
+      {user ? (
+        <div className="space-y-3">
+          <div className="text-sm">
             ✅ Logged in as: <b>{user.email}</b>
           </div>
-        ) : (
-          <LoginButton />
-        )}
-      </div>
+          <LogoutButton />
+        </div>
+      ) : (
+        <LoginButton />
+      )}
     </main>
   );
 }
