@@ -1,3 +1,9 @@
+/**
+ * 역할: 요청 URL에 locale prefix(/ko, /en, /fr)가 있는지 검사하고,
+ * 없으면 Accept-Language 기반으로 locale을 감지해 해당 경로로 리다이렉트한다.
+ * 동시에 현재 locale을 쿠키에 저장하여 RootLayout에서 <html lang> 설정에 사용한다.
+ */
+
 import { NextRequest, NextResponse } from "next/server";
 import {
   DEFAULT_LOCALE,
