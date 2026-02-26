@@ -1,11 +1,4 @@
-// src/components/layout/Header.tsx
-
-/**
- * 역할: 전역 헤더(Server Component).
- * - 서버에서 Supabase 세션을 읽어 로그인 여부를 판단
- * - 왼쪽 로고(홈 링크), 오른쪽 유틸 버튼(검색/다크모드/언어/로그인)을 배치
- * - 로그인 상태면 대시보드 아이콘을 추가로 노출
- */
+// src/components/layout/Header.tsx (or src/components/header/Header.tsx)
 
 import Link from "next/link";
 import { createClient } from "@/app/lib/supabase/server";
@@ -22,46 +15,39 @@ export default async function Header({ locale }: { locale: Locale }) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const isAuthed = Boolean(user);
-
   return (
-    <header className="sticky top-0 z-50 border-b border-black/10 bg-white/80 backdrop-blur">
-      <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
-        {/* Left: Logo -> Home */}
-        <Link
-          href={`/${locale}`}
-          className="inline-flex items-center gap-2 rounded-xl px-2 py-1 hover:bg-[#DBEBF1] transition"
-        >
-          <span className="text-base font-semibold tracking-tight text-black">
+    <header className="sticky top-0 z-50 border-b border-black/10 bg-white/90 backdrop-blur">
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
+        {/* Left Section */}
+        <div className="flex items-center gap-6">
+          {/* Logo */}
+          <Link
+            href={`/${locale}`}
+            className="text-lg font-semibold tracking-tight text-black hover:opacity-80 transition"
+          >
             WakeUp
-          </span>
-        </Link>
+          </Link>
 
-        {/* Right: Controls */}
-        <div className="flex items-center gap-2">
-          {isAuthed && (
+          {/* Navigation */}
+          <nav className="flex items-center gap-4 text-sm font-medium">
             <Link
-              href={`/${locale}/dashboard`}
-              className="inline-flex items-center justify-center rounded-full p-2 hover:bg-[#DBEBF1] transition"
-              aria-label="Dashboard"
-              title="Dashboard"
+              href={`/${locale}/quiz`}
+              className="px-3 py-1.5 rounded-full hover:bg-[#DBEBF1] transition"
             >
-              {/* 간단한 대시보드 아이콘 (SVG) */}
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                className="text-black"
-              >
-                <path
-                  d="M4 13h7V4H4v9zm9 7h7V11h-7v9zM4 20h7v-5H4v5zm9-16v5h7V4h-7z"
-                  fill="currentColor"
-                />
-              </svg>
+              Test
             </Link>
-          )}
 
+            <Link
+              href={`/${locale}/products`}
+              className="px-3 py-1.5 rounded-full hover:bg-[#DBEBF1] transition"
+            >
+              Products
+            </Link>
+          </nav>
+        </div>
+
+        {/* Right Section */}
+        <div className="flex items-center gap-2">
           <SearchButton locale={locale} />
           <ThemeToggle />
           <LanguageSwitcher currentLocale={locale} />
