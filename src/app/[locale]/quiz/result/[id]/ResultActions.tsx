@@ -2,8 +2,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { createClient } from "@/app/lib/supabase/client"; // ✅ 너 프로젝트 경로에 맞게
 
 type Props = {
   routeLocale: "ko" | "en" | "fr";
@@ -79,6 +79,71 @@ function IconButton({
   );
 }
 
+function ConfirmLoginModal({
+  open,
+  title,
+  description,
+  confirmText,
+  cancelText,
+  onConfirm,
+  onCancel,
+  loading,
+}: {
+  open: boolean;
+  title: string;
+  description: string;
+  confirmText: string;
+  cancelText: string;
+  onConfirm: () => void;
+  onCancel: () => void;
+  loading?: boolean;
+}) {
+  if (!open) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center px-4"
+      role="dialog"
+      aria-modal="true"
+    >
+      <button
+        type="button"
+        className="absolute inset-0 bg-black/40"
+        onClick={onCancel}
+        aria-label="Close"
+      />
+
+      <div className="relative w-full max-w-sm rounded-3xl border border-black/10 bg-white p-6 shadow-xl">
+        <h3 className="text-base font-semibold text-black">{title}</h3>
+        <p className="mt-2 text-sm text-black/60 whitespace-pre-line">
+          {description}
+        </p>
+
+        <div className="mt-5 flex gap-2 justify-end">
+          <button
+            type="button"
+            onClick={onCancel}
+            className="rounded-full border border-black/15 bg-white px-4 py-2 text-sm font-medium text-black hover:bg-black/5 transition"
+            disabled={loading}
+          >
+            {cancelText}
+          </button>
+          <button
+            type="button"
+            onClick={onConfirm}
+            className="rounded-full bg-black px-4 py-2 text-sm font-medium text-white hover:opacity-90 transition disabled:opacity-60"
+            disabled={loading}
+          >
+            {loading
+              ? t("en", "Loading...", "Loading...", "Loading...")
+              : confirmText}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ResultActions({
   routeLocale,
   resultId,
@@ -91,6 +156,8 @@ export default function ResultActions({
 
   const [toast, setToast] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [isAuthLoading, setIsAuthLoading] = useState(false);
 
   const encodedUrl = useMemo(() => encodeURIComponent(shareUrl), [shareUrl]);
 
@@ -104,14 +171,6 @@ export default function ResultActions({
     [encodedUrl],
   );
 
-  // 트위터(X) 버전도 가능:
-  // const xShareUrl = `https://twitter.com/intent/tweet?url=${encodedUrl}`;
-
-  const loginUrl = useMemo(() => {
-    const next = `/${routeLocale}/quiz/result/${resultId}`;
-    return `/${routeLocale}/login?next=${encodeURIComponent(next)}&save=1`;
-  }, [routeLocale, resultId]);
-
   function showToast(msg: string) {
     setToast(msg);
     window.setTimeout(() => setToast(null), 1600);
@@ -123,26 +182,52 @@ export default function ResultActions({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ resultId: id }),
     });
-
     if (!res.ok) throw new Error("Save failed");
+  }
+
+  async function startGoogleLogin() {
+    setIsAuthLoading(true);
+
+    // ✅ 로그인 후 돌아올 페이지(현재 결과 페이지)
+    const next = `/${routeLocale}/quiz/result/${resultId}`;
+
+    // ✅ OAuth 완료 후 redirect될 절대 URL이 필요함
+    // - NEXT_PUBLIC_SITE_URL 설정 권장
+    const origin = window.location.origin;
+    const redirectTo = `${origin}${next}?save=1`;
+
+    // ✅ intent 저장 (로그인 후 자동 저장)
+    try {
+      localStorage.setItem("pendingSaveResultId", resultId);
+    } catch {}
+
+    const supabase = createClient();
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo,
+      },
+    });
+
+    if (error) {
+      setIsAuthLoading(false);
+      showToast(
+        t(
+          routeLocale,
+          "로그인에 실패했어요.",
+          "Login failed.",
+          "Échec de connexion.",
+        ),
+      );
+    }
+    // 성공이면 브라우저가 리다이렉트됨
   }
 
   async function onSaveClick() {
     if (isSaving) return;
 
     if (!isAuthed) {
-      try {
-        localStorage.setItem("pendingSaveResultId", resultId);
-      } catch {}
-      showToast(
-        t(
-          routeLocale,
-          "저장하려면 로그인해 주세요.",
-          "Log in to save.",
-          "Connectez-vous pour enregistrer.",
-        ),
-      );
-      router.push(loginUrl);
+      setLoginModalOpen(true);
       return;
     }
 
@@ -168,16 +253,14 @@ export default function ResultActions({
 
   async function onCopyLink() {
     const ok = await safeCopyToClipboard(shareUrl);
-    if (ok) {
-      showToast(
-        t(routeLocale, "링크를 복사했어요!", "Link copied!", "Copié !"),
-      );
-    } else {
-      showToast(t(routeLocale, "복사에 실패했어요.", "Copy failed.", "Échec."));
-    }
+    showToast(
+      ok
+        ? t(routeLocale, "링크를 복사했어요!", "Link copied!", "Copié !")
+        : t(routeLocale, "복사에 실패했어요.", "Copy failed.", "Échec."),
+    );
   }
 
-  // 로그인/회원가입 후 자동 저장
+  // ✅ OAuth 후 돌아오면 자동 저장
   useEffect(() => {
     if (!isAuthed) return;
 
@@ -206,7 +289,6 @@ export default function ResultActions({
         try {
           localStorage.removeItem("pendingSaveResultId");
         } catch {}
-
         router.replace(`/${routeLocale}/quiz/result/${resultId}`);
       } catch {
         showToast(
@@ -219,49 +301,69 @@ export default function ResultActions({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthed, resultId]);
 
-  if (variant === "buttons") {
-    return (
-      <>
-        <button
-          onClick={onSaveClick}
-          disabled={isSaving}
-          className="rounded-full bg-black px-5 py-2.5 text-sm font-medium text-white hover:opacity-90 transition disabled:opacity-60 disabled:cursor-not-allowed"
-        >
-          {isSaving
-            ? t(routeLocale, "저장 중...", "Saving...", "Enregistrement...")
-            : t(routeLocale, "저장하기", "Save", "Enregistrer")}
-        </button>
-
-        {!isAuthed && (
-          <span className="hidden sm:inline text-xs text-black/40">
-            {t(
-              routeLocale,
-              "로그인 필요",
-              "Login required",
-              "Connexion requise",
-            )}
-          </span>
-        )}
-      </>
+  const content =
+    variant === "buttons" ? (
+      <button
+        onClick={onSaveClick}
+        disabled={isSaving}
+        className="rounded-full bg-black px-5 py-2.5 text-sm font-medium text-white hover:opacity-90 transition disabled:opacity-60 disabled:cursor-not-allowed"
+      >
+        {isSaving
+          ? t(routeLocale, "저장 중...", "Saving...", "Enregistrement...")
+          : t(routeLocale, "저장하기", "Save", "Enregistrer")}
+      </button>
+    ) : (
+      <div className="flex items-center gap-2">
+        <IconButton
+          label={t(routeLocale, "링크 복사", "Copy link", "Copier")}
+          onClick={onCopyLink}
+        />
+        <IconButton label="WhatsApp" href={whatsappShareUrl} />
+        <IconButton label="Facebook" href={facebookShareUrl} />
+      </div>
     );
-  }
 
-  // variant === "icons"
   return (
-    <div className="flex items-center gap-2">
-      <IconButton
-        label={t(routeLocale, "링크 복사", "Copy link", "Copier")}
-        onClick={onCopyLink}
-      />
-      <IconButton label="WhatsApp" href={whatsappShareUrl} />
-      <IconButton label="Facebook" href={facebookShareUrl} />
+    <>
+      {content}
 
-      {/* Toast */}
+      {/* ✅ 로그인 필요 모달 */}
+      <ConfirmLoginModal
+        open={loginModalOpen}
+        title={t(
+          routeLocale,
+          "로그인이 필요합니다",
+          "Login required",
+          "Connexion requise",
+        )}
+        description={t(
+          routeLocale,
+          "결과를 저장하려면 Google 로그인(계정)이 필요해요.\n지금 로그인할까요?",
+          "You need to log in with Google to save your result.\nContinue now?",
+          "Vous devez vous connecter avec Google pour enregistrer.\nContinuer ?",
+        )}
+        confirmText={t(
+          routeLocale,
+          "Google로 계속하기",
+          "Continue with Google",
+          "Continuer avec Google",
+        )}
+        cancelText={t(routeLocale, "나가기", "Cancel", "Annuler")}
+        loading={isAuthLoading}
+        onConfirm={async () => {
+          // 모달 닫고 OAuth 시작
+          setLoginModalOpen(false);
+          await startGoogleLogin();
+        }}
+        onCancel={() => setLoginModalOpen(false)}
+      />
+
+      {/* ✅ Toast (항상 표시) */}
       {toast && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-black px-4 py-2 text-xs font-medium text-white shadow-lg">
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-black px-4 py-2 text-xs font-medium text-white shadow-lg z-50">
           {toast}
         </div>
       )}
-    </div>
+    </>
   );
 }
