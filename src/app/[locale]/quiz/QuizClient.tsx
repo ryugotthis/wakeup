@@ -3,12 +3,13 @@
 /**
  * 역할: 퀴즈 질문 JSON(behavior + preference)을 locale에 맞게 병합/정규화해서
  * 클라이언트에서 한 문항씩 렌더링하고, 사용자의 선택 답변을 {Q1:"Q1_A", ...} 형태로 수집한 뒤
- * 마지막에 제출(현재는 콘솔/알림, 추후 API로 연결)까지 처리하는 Quiz UI 컴포넌트.
+ * 제출 API로 전송하고 결과 페이지로 이동하는 Quiz UI 컴포넌트.
  */
 
 import behaviorJson from "@/data/quiz/questions.behavior.json";
 import preferenceJson from "@/data/quiz/questions.preference.json";
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 
 type Locale = "KO" | "EN" | "FR";
 type RawText = string | Record<string, string>;
@@ -26,6 +27,8 @@ type UIQuestion = {
 };
 
 export default function QuizClient({ locale }: { locale: Locale }) {
+  const router = useRouter();
+
   const questions: UIQuestion[] = useMemo(() => {
     const b = behaviorJson as any;
     const p = preferenceJson as any;
@@ -45,6 +48,7 @@ export default function QuizClient({ locale }: { locale: Locale }) {
 
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [idx, setIdx] = useState(0);
+  const [submitting, setSubmitting] = useState(false);
 
   const current = questions[idx];
   const total = questions.length;
@@ -58,16 +62,33 @@ export default function QuizClient({ locale }: { locale: Locale }) {
     }));
   };
 
-  const goNext = () => {
-    setIdx((prev) => Math.min(prev + 1, total - 1));
-  };
+  const goNext = () => setIdx((prev) => Math.min(prev + 1, total - 1));
+  const goPrev = () => setIdx((prev) => Math.max(prev - 1, 0));
 
-  const goPrev = () => {
-    setIdx((prev) => Math.max(prev - 1, 0));
-  };
+  const onSubmit = async () => {
+    if (submitting) return;
 
-  const onSubmit = () => {
-    console.log("QUIZ SUBMIT:", answers);
+    const routeLocale = locale === "KO" ? "ko" : locale === "EN" ? "en" : "fr";
+
+    try {
+      setSubmitting(true);
+
+      const res = await fetch(`/api/quiz/submit`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ answers }),
+      });
+
+      if (!res.ok) {
+        alert("제출에 실패했어요. 다시 시도해주세요.");
+        return;
+      }
+
+      const { id } = (await res.json()) as { id: string };
+      router.push(`/${routeLocale}/quiz/result/${id}`);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const answeredCount = Object.keys(answers).length;
@@ -97,16 +118,16 @@ export default function QuizClient({ locale }: { locale: Locale }) {
           <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
             <div
               className="h-full bg-gray-700 transition-all duration-300"
-              style={{
-                width: `${Math.round(((idx + 1) / total) * 100)}%`,
-              }}
+              style={{ width: `${Math.round(((idx + 1) / total) * 100)}%` }}
             />
           </div>
         </div>
       </div>
 
       {/* 질문 */}
-      <h2 className="text-xl font-semibold leading-relaxed">{current.text}</h2>
+      <h2 className="text-xl font-semibold leading-relaxed text-black">
+        {current.text}
+      </h2>
 
       {/* 선택지 */}
       <ul className="space-y-3">
@@ -118,6 +139,7 @@ export default function QuizClient({ locale }: { locale: Locale }) {
               <button
                 type="button"
                 onClick={() => onSelect(current.code, opt.id)}
+                disabled={submitting}
                 className={`
                   w-full text-left px-4 py-3 rounded-xl transition
                   ${
@@ -125,6 +147,7 @@ export default function QuizClient({ locale }: { locale: Locale }) {
                       ? "border-2 border-black bg-black/5"
                       : "border border-gray-300 bg-white hover:bg-gray-50"
                   }
+                  ${submitting ? "opacity-60 cursor-not-allowed" : ""}
                 `}
               >
                 {opt.text}
@@ -139,11 +162,11 @@ export default function QuizClient({ locale }: { locale: Locale }) {
         <button
           type="button"
           onClick={goPrev}
-          disabled={idx === 0}
+          disabled={idx === 0 || submitting}
           className={`
             px-4 py-2 rounded-lg border
             ${
-              idx === 0
+              idx === 0 || submitting
                 ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                 : "bg-white hover:bg-gray-50"
             }
@@ -156,11 +179,11 @@ export default function QuizClient({ locale }: { locale: Locale }) {
           <button
             type="button"
             onClick={goNext}
-            disabled={!selectedOptionId}
+            disabled={!selectedOptionId || submitting}
             className={`
               flex-1 px-4 py-2 rounded-lg border
               ${
-                !selectedOptionId
+                !selectedOptionId || submitting
                   ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                   : "bg-white hover:bg-gray-50"
               }
@@ -172,17 +195,17 @@ export default function QuizClient({ locale }: { locale: Locale }) {
           <button
             type="button"
             onClick={onSubmit}
-            disabled={answeredCount < total}
+            disabled={answeredCount < total || submitting}
             className={`
               flex-1 px-4 py-2 rounded-lg border
               ${
-                answeredCount < total
+                answeredCount < total || submitting
                   ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                   : "bg-black text-white hover:bg-black/90"
               }
             `}
           >
-            Submit
+            {submitting ? "Submitting..." : "Submit"}
           </button>
         )}
       </div>
