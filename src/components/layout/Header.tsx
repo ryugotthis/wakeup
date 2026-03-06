@@ -4,10 +4,10 @@ import Link from "next/link";
 import { createClient } from "@/app/lib/supabase/server";
 import type { Locale } from "@/app/lib/i18n/config";
 
-import SearchButton from "@/components/header/SearchButton";
-import ThemeToggle from "@/components/header/ThemeToggle";
-import LanguageSwitcher from "@/components/header/LanguageSwitcher";
-import AuthMenu from "@/components/header/AuthMenu";
+import SearchButton from "@/components/layout/header/SearchButton";
+import ThemeToggle from "@/components/layout/header/ThemeToggle";
+import LanguageSwitcher from "@/components/layout/header/LanguageSwitcher";
+import AuthMenu from "@/components/layout/header/AuthMenu";
 
 export default async function Header({ locale }: { locale: Locale }) {
   const supabase = await createClient();

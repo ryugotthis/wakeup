@@ -39,15 +39,15 @@ export default function ConfirmModal({
       <div className="relative w-full max-w-sm rounded-3xl border border-black/10 bg-white p-6 shadow-xl">
         <h3 className="text-base font-semibold text-black">{title}</h3>
 
-        <p className="mt-2 text-sm text-black/60 whitespace-pre-line">
+        <p className="mt-2 whitespace-pre-line text-sm text-black/60">
           {description}
         </p>
 
-        <div className="mt-5 flex gap-2 justify-end">
+        <div className="mt-5 flex justify-end gap-2">
           <button
             type="button"
             onClick={onCancel}
-            className="rounded-full border border-black/15 bg-white px-4 py-2 text-sm font-medium text-black hover:bg-black/5 transition"
+            className="rounded-full border border-black/15 bg-white px-4 py-2 text-sm font-medium text-black transition hover:bg-black/5"
             disabled={loading}
           >
             {cancelText}
@@ -56,7 +56,7 @@ export default function ConfirmModal({
           <button
             type="button"
             onClick={onConfirm}
-            className="rounded-full bg-black px-4 py-2 text-sm font-medium text-white hover:opacity-90 transition disabled:opacity-60"
+            className="rounded-full bg-black px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 disabled:opacity-60"
             disabled={loading}
           >
             {loading ? "Loading..." : confirmText}

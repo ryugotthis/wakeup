@@ -6,12 +6,14 @@ type BookmarkButtonProps = {
   label: string;
   productId: string;
   initialBookmarked?: boolean;
+  isAuthed: boolean;
 };
 
 export default function BookmarkButton({
   label,
   productId,
   initialBookmarked = false,
+  isAuthed,
 }: BookmarkButtonProps) {
   const [bookmarked, setBookmarked] = useState(initialBookmarked);
   const [loading, setLoading] = useState(false);
@@ -20,12 +22,17 @@ export default function BookmarkButton({
     e.preventDefault();
     e.stopPropagation();
 
+    // 로그인 안 되어있으면 전역 모달 열기
+    if (!isAuthed) {
+      window.dispatchEvent(new Event("open-login-required-modal"));
+      return;
+    }
+
     if (loading) return;
 
     const previousBookmarked = bookmarked;
     const nextBookmarked = !bookmarked;
 
-    // 1) UI 먼저 변경
     setBookmarked(nextBookmarked);
     setLoading(true);
 
@@ -35,9 +42,7 @@ export default function BookmarkButton({
           method: "DELETE",
         });
 
-        if (!res.ok) {
-          throw new Error("북마크 삭제 실패");
-        }
+        if (!res.ok) throw new Error("북마크 삭제 실패");
       } else {
         const res = await fetch("/api/bookmarks", {
           method: "POST",
@@ -47,14 +52,10 @@ export default function BookmarkButton({
           body: JSON.stringify({ productId }),
         });
 
-        if (!res.ok) {
-          throw new Error("북마크 추가 실패");
-        }
+        if (!res.ok) throw new Error("북마크 추가 실패");
       }
     } catch (error) {
       console.error(error);
-
-      // 2) 실패하면 원래 상태로 롤백
       setBookmarked(previousBookmarked);
     } finally {
       setLoading(false);

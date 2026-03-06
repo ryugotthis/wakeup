@@ -1,9 +1,10 @@
-// src/app/[locale]/products/page.tsx
 import Link from "next/link";
 import type { Locale as RouteLocale } from "@/app/lib/i18n/config";
 import { prisma } from "@/lib/prisma";
+import { createClient } from "@/app/lib/supabase/server";
 import SktiDropdown from "./SktiDropdown";
 import ProductCard from "./ProductCard";
+import LoginRequiredModal from "@/components/auth/LoginRequiredModal";
 
 type DataLocale = "KO" | "EN" | "FR";
 type ProductCategory =
@@ -113,6 +114,13 @@ export default async function Page({
   const dataLocale = routeLocaleToDataLocale(routeLocale);
   const sp = await searchParams;
 
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const isAuthed = !!user;
+
   const q = typeof sp.q === "string" ? sp.q.trim() : "";
   const cat = isCategory(sp.cat) ? sp.cat : undefined;
   const skinType = isSkinType(sp.skinType) ? sp.skinType : undefined;
@@ -202,7 +210,8 @@ export default async function Page({
   return (
     <main className="min-h-screen bg-[#DBEBF1]/40 px-6 py-14">
       <div className="mx-auto max-w-6xl space-y-6">
-        {/* Header */}
+        <LoginRequiredModal routeLocale={routeLocale} />
+
         <header className="rounded-3xl border border-black/10 bg-white p-8">
           <p className="text-sm font-medium text-black/50">
             {t(routeLocale, "제품", "Products", "Produits")}
@@ -233,7 +242,7 @@ export default async function Page({
             {cat || skinType || q ? (
               <Link
                 href={`/${routeLocale}/products`}
-                className="ml-1 text-xs text-black/50 hover:text-black transition underline underline-offset-4"
+                className="ml-1 text-xs text-black/50 underline underline-offset-4 transition hover:text-black"
               >
                 {t(routeLocale, "필터 초기화", "Reset", "Réinitialiser")}
               </Link>
@@ -241,9 +250,7 @@ export default async function Page({
           </div>
         </header>
 
-        {/* Filters */}
-        <section className="rounded-3xl border border-black/10 bg-white p-6 space-y-4">
-          {/* Category chips */}
+        <section className="space-y-4 rounded-3xl border border-black/10 bg-white p-6">
           <div>
             <p className="text-xs font-medium text-black/50">
               {t(routeLocale, "카테고리", "Category", "Catégorie")}
@@ -253,10 +260,10 @@ export default async function Page({
               <Link
                 href={buildUrl({ cat: undefined, page: "1" })}
                 className={cn(
-                  "rounded-full px-4 py-2 text-sm font-medium border transition",
+                  "rounded-full border px-4 py-2 text-sm font-medium transition",
                   !cat
-                    ? "bg-black text-white border-black"
-                    : "bg-white text-black border-black/15 hover:bg-black/5",
+                    ? "border-black bg-black text-white"
+                    : "border-black/15 bg-white text-black hover:bg-black/5",
                 )}
               >
                 {t(routeLocale, "전체", "All", "Tous")}
@@ -269,10 +276,10 @@ export default async function Page({
                     key={c.value}
                     href={buildUrl({ cat: c.value, page: "1" })}
                     className={cn(
-                      "rounded-full px-4 py-2 text-sm font-medium border transition",
+                      "rounded-full border px-4 py-2 text-sm font-medium transition",
                       active
-                        ? "bg-black text-white border-black"
-                        : "bg-white text-black border-black/15 hover:bg-black/5",
+                        ? "border-black bg-black text-white"
+                        : "border-black/15 bg-white text-black hover:bg-black/5",
                     )}
                   >
                     {c.label}
@@ -282,7 +289,6 @@ export default async function Page({
             </div>
           </div>
 
-          {/* SKTI + Search */}
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div className="flex items-end gap-3">
               <SktiDropdown
@@ -317,13 +323,13 @@ export default async function Page({
                     "Product name",
                     "Nom du produit",
                   )}
-                  className="mt-2 h-10 w-full sm:w-[260px] rounded-full border border-black/10 bg-white px-4 text-sm outline-none focus:border-black/30"
+                  className="mt-2 h-10 w-full rounded-full border border-black/10 bg-white px-4 text-sm outline-none focus:border-black/30 sm:w-[260px]"
                 />
               </div>
 
               <button
                 type="submit"
-                className="mt-6 h-10 rounded-full bg-black px-5 text-sm font-medium text-white hover:opacity-90 transition"
+                className="mt-6 h-10 rounded-full bg-black px-5 text-sm font-medium text-white transition hover:opacity-90"
               >
                 {t(routeLocale, "검색", "Go", "OK")}
               </button>
@@ -331,7 +337,6 @@ export default async function Page({
           </div>
         </section>
 
-        {/* List */}
         {products.length === 0 ? (
           <section className="rounded-3xl border border-black/10 bg-white p-8">
             <p className="text-sm text-black/60">
@@ -371,13 +376,13 @@ export default async function Page({
                   description={desc}
                   imageUrl={p.imageUrl}
                   tagLabels={tagLabels}
+                  isAuthed={isAuthed}
                 />
               );
             })}
           </section>
         )}
 
-        {/* Pagination */}
         {totalPages > 1 && (
           <nav className="flex items-center justify-between rounded-3xl border border-black/10 bg-white p-4">
             <p className="text-xs text-black/50">

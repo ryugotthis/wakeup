@@ -40,6 +40,7 @@ type ProductCardProps = {
   description?: string | null;
   imageUrl?: string | null;
   tagLabels?: string[];
+  isAuthed: boolean;
 };
 
 export default function ProductCard({
@@ -52,6 +53,7 @@ export default function ProductCard({
   description,
   imageUrl,
   tagLabels = [],
+  isAuthed,
 }: ProductCardProps) {
   return (
     <Link
@@ -64,6 +66,7 @@ export default function ProductCard({
           <div className="absolute right-3 top-3 z-10">
             <BookmarkButton
               productId={productId}
+              isAuthed={isAuthed}
               label={t(routeLocale, "찜하기", "Save", "Enregistrer")}
             />
           </div>
