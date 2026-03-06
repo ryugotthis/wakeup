@@ -31,6 +31,7 @@ function Chip({
 }
 
 type ProductCardProps = {
+  productId: string;
   routeLocale: RouteLocale;
   slug: string;
   category: string;
@@ -42,6 +43,7 @@ type ProductCardProps = {
 };
 
 export default function ProductCard({
+  productId,
   routeLocale,
   slug,
   category,
@@ -61,6 +63,7 @@ export default function ProductCard({
         <div className="relative aspect-square w-full bg-[#F7F7F7]">
           <div className="absolute right-3 top-3 z-10">
             <BookmarkButton
+              productId={productId}
               label={t(routeLocale, "찜하기", "Save", "Enregistrer")}
             />
           </div>

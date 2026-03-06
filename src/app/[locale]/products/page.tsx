@@ -362,6 +362,7 @@ export default async function Page({
               return (
                 <ProductCard
                   key={p.id}
+                  productId={p.id}
                   routeLocale={routeLocale}
                   slug={p.slug}
                   category={p.category}
