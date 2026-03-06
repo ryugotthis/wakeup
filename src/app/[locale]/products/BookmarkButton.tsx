@@ -22,10 +22,15 @@ export default function BookmarkButton({
 
     if (loading) return;
 
+    const previousBookmarked = bookmarked;
+    const nextBookmarked = !bookmarked;
+
+    // 1) UI 먼저 변경
+    setBookmarked(nextBookmarked);
     setLoading(true);
 
     try {
-      if (bookmarked) {
+      if (previousBookmarked) {
         const res = await fetch(`/api/bookmarks/${productId}`, {
           method: "DELETE",
         });
@@ -33,8 +38,6 @@ export default function BookmarkButton({
         if (!res.ok) {
           throw new Error("북마크 삭제 실패");
         }
-
-        setBookmarked(false);
       } else {
         const res = await fetch("/api/bookmarks", {
           method: "POST",
@@ -47,11 +50,12 @@ export default function BookmarkButton({
         if (!res.ok) {
           throw new Error("북마크 추가 실패");
         }
-
-        setBookmarked(true);
       }
     } catch (error) {
       console.error(error);
+
+      // 2) 실패하면 원래 상태로 롤백
+      setBookmarked(previousBookmarked);
     } finally {
       setLoading(false);
     }
