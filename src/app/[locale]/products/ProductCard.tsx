@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Locale as RouteLocale } from "@/app/lib/i18n/config";
-import BookmarkButton from "./BookmarkButton";
+import BookmarkButton from "@/components/products/BookmarkButton";
 
 function t(routeLocale: RouteLocale, ko: string, en: string, fr: string) {
   return routeLocale === "ko" ? ko : routeLocale === "fr" ? fr : en;
@@ -41,6 +41,7 @@ type ProductCardProps = {
   imageUrl?: string | null;
   tagLabels?: string[];
   isAuthed: boolean;
+  onRequireLogin?: (productId: string) => void;
 };
 
 export default function ProductCard({
@@ -54,6 +55,7 @@ export default function ProductCard({
   imageUrl,
   tagLabels = [],
   isAuthed,
+  onRequireLogin,
 }: ProductCardProps) {
   return (
     <Link
@@ -68,6 +70,7 @@ export default function ProductCard({
               productId={productId}
               isAuthed={isAuthed}
               label={t(routeLocale, "찜하기", "Save", "Enregistrer")}
+              onRequireLogin={onRequireLogin}
             />
           </div>
 
