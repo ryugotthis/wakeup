@@ -1,10 +1,14 @@
-// src/app/[locale]/quiz/result/[id]/ResultActions.tsx
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { createClient } from "@/app/lib/supabase/client"; // ✅ 너 프로젝트 경로에 맞게
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { createClient } from "@/app/lib/supabase/client";
 import ConfirmModal from "@/components/common/ConfirmModal";
+import {
+  buildAuthReturnUrl,
+  clearAuthResumeState,
+  shouldResumeAfterLogin,
+} from "@/app/lib/auth/authActionResume";
 
 type Props = {
   routeLocale: "ko" | "en" | "fr";
@@ -88,6 +92,7 @@ export default function ResultActions({
   variant,
 }: Props) {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const [toast, setToast] = useState<string | null>(null);
@@ -118,21 +123,22 @@ export default function ResultActions({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ resultId: id }),
     });
+
     if (!res.ok) throw new Error("Save failed");
   }
 
   async function startGoogleLogin() {
     setIsAuthLoading(true);
 
-    // ✅ 로그인 후 돌아올 페이지(현재 결과 페이지)
-    const next = `/${routeLocale}/quiz/result/${resultId}`;
-
-    // ✅ OAuth 완료 후 redirect될 절대 URL이 필요함
-    // - NEXT_PUBLIC_SITE_URL 설정 권장
     const origin = window.location.origin;
-    const redirectTo = `${origin}${next}?save=1`;
+    const redirectTo = buildAuthReturnUrl({
+      origin,
+      pathname,
+      search: searchParams.toString(),
+      actionParamKey: "save",
+      actionParamValue: "1",
+    });
 
-    // ✅ intent 저장 (로그인 후 자동 저장)
     try {
       localStorage.setItem("pendingSaveResultId", resultId);
     } catch {}
@@ -156,7 +162,6 @@ export default function ResultActions({
         ),
       );
     }
-    // 성공이면 브라우저가 리다이렉트됨
   }
 
   async function onSaveClick() {
@@ -196,18 +201,22 @@ export default function ResultActions({
     );
   }
 
-  // ✅ OAuth 후 돌아오면 자동 저장
+  /**
+   * 역할:
+   * OAuth 로그인 후 현재 결과 페이지로 다시 돌아왔을 때
+   * 로그인 전에 시도했던 "결과 저장" 액션을 자동으로 재실행한다.
+   */
   useEffect(() => {
     if (!isAuthed) return;
 
-    const saveParam = searchParams?.get("save");
-    let pending: string | null = null;
+    const shouldAutoSave = shouldResumeAfterLogin({
+      search: searchParams.toString(),
+      actionParamKey: "save",
+      actionParamValue: "1",
+      storageKey: "pendingSaveResultId",
+      storageValue: resultId,
+    });
 
-    try {
-      pending = localStorage.getItem("pendingSaveResultId");
-    } catch {}
-
-    const shouldAutoSave = saveParam === "1" || pending === resultId;
     if (!shouldAutoSave) return;
 
     (async () => {
@@ -222,10 +231,15 @@ export default function ResultActions({
             "Enregistré !",
           ),
         );
-        try {
-          localStorage.removeItem("pendingSaveResultId");
-        } catch {}
-        router.replace(`/${routeLocale}/quiz/result/${resultId}`);
+
+        const cleanedUrl = clearAuthResumeState({
+          pathname,
+          search: searchParams.toString(),
+          queryKeysToRemove: ["save"],
+          storageKeysToRemove: ["pendingSaveResultId"],
+        });
+
+        router.replace(cleanedUrl);
       } catch {
         showToast(
           t(routeLocale, "저장에 실패했어요.", "Failed to save.", "Échec."),
@@ -234,15 +248,14 @@ export default function ResultActions({
         setIsSaving(false);
       }
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthed, resultId]);
+  }, [isAuthed, pathname, resultId, routeLocale, router, searchParams]);
 
   const content =
     variant === "buttons" ? (
       <button
         onClick={onSaveClick}
         disabled={isSaving}
-        className="rounded-full bg-black px-5 py-2.5 text-sm font-medium text-white hover:opacity-90 transition disabled:opacity-60 disabled:cursor-not-allowed"
+        className="rounded-full bg-black px-5 py-2.5 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isSaving
           ? t(routeLocale, "저장 중...", "Saving...", "Enregistrement...")
@@ -263,7 +276,6 @@ export default function ResultActions({
     <>
       {content}
 
-      {/* ✅ 로그인 필요 모달 */}
       <ConfirmModal
         open={loginModalOpen}
         title={t(
@@ -287,16 +299,14 @@ export default function ResultActions({
         cancelText={t(routeLocale, "나가기", "Cancel", "Annuler")}
         loading={isAuthLoading}
         onConfirm={async () => {
-          // 모달 닫고 OAuth 시작
           setLoginModalOpen(false);
           await startGoogleLogin();
         }}
         onCancel={() => setLoginModalOpen(false)}
       />
 
-      {/* ✅ Toast (항상 표시) */}
       {toast && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-black px-4 py-2 text-xs font-medium text-white shadow-lg z-50">
+        <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full bg-black px-4 py-2 text-xs font-medium text-white shadow-lg">
           {toast}
         </div>
       )}
