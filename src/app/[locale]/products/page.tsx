@@ -179,6 +179,16 @@ export default async function Page({
           orderBy: { priority: "asc" },
           take: 4,
         },
+
+        ...(user
+          ? {
+              bookmarks: {
+                where: { userId: user.id },
+                select: { id: true },
+                take: 1,
+              },
+            }
+          : {}),
       },
     }),
   ]);
@@ -212,6 +222,7 @@ export default async function Page({
       description: desc,
       imageUrl: p.imageUrl,
       tagLabels,
+      isBookmarked: "bookmarks" in p ? p.bookmarks.length > 0 : false,
     };
   });
 

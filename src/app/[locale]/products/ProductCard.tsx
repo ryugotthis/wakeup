@@ -41,6 +41,7 @@ type ProductCardProps = {
   imageUrl?: string | null;
   tagLabels?: string[];
   isAuthed: boolean;
+  initialBookmarked?: boolean;
   onRequireLogin?: (productId: string) => void;
 };
 
@@ -55,6 +56,7 @@ export default function ProductCard({
   imageUrl,
   tagLabels = [],
   isAuthed,
+  initialBookmarked,
   onRequireLogin,
 }: ProductCardProps) {
   return (
@@ -70,6 +72,7 @@ export default function ProductCard({
               productId={productId}
               isAuthed={isAuthed}
               label={t(routeLocale, "찜하기", "Save", "Enregistrer")}
+              initialBookmarked={initialBookmarked}
               onRequireLogin={onRequireLogin}
             />
           </div>

@@ -29,6 +29,10 @@ export default function BookmarkButton({
   const [bookmarked, setBookmarked] = useState(initialBookmarked);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    setBookmarked(initialBookmarked);
+  }, [initialBookmarked]);
+
   async function addBookmark(id: string) {
     const res = await fetch("/api/bookmarks", {
       method: "POST",

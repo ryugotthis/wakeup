@@ -17,6 +17,7 @@ type ProductItem = {
   description?: string | null;
   imageUrl?: string | null;
   tagLabels?: string[];
+  isBookmarked: boolean;
 };
 
 type Props = {
@@ -104,6 +105,7 @@ export default function ProductsGridClient({
             imageUrl={product.imageUrl}
             tagLabels={product.tagLabels}
             isAuthed={isAuthed}
+            initialBookmarked={product.isBookmarked}
             onRequireLogin={handleRequireLogin}
           />
         ))}
