@@ -2,7 +2,10 @@
 import { NextResponse } from "next/server";
 import behavior from "@/data/quiz/questions.behavior.json";
 import preference from "@/data/quiz/questions.preference.json";
-import { computeSkinType } from "@/domain/skinType/computeSkinType";
+import {
+  computeSkinType,
+  type QuestionsJson,
+} from "@/domain/skinType/computeSkinType";
 import { prisma } from "@/lib/prisma";
 
 export async function POST(req: Request) {
@@ -10,7 +13,11 @@ export async function POST(req: Request) {
     answers: Record<string, string | null | undefined>;
   };
 
-  const computed = computeSkinType(behavior as any, preference as any, answers);
+  const computed = computeSkinType(
+    behavior as QuestionsJson,
+    preference as QuestionsJson,
+    answers,
+  );
 
   const created = await prisma.testResult.create({
     data: {

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import type { Locale } from "@/app/lib/i18n/config";
-import { createClient } from "@/app/lib/supabase/server";
 import { getDictionary } from "@/app/lib/i18n/getDictionary";
 
 export default async function Page({
@@ -13,11 +12,6 @@ export default async function Page({
   const { locale } = await params;
 
   const dict = await getDictionary(locale);
-
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
 
   return (
     <main className="flex flex-col">

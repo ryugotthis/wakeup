@@ -1,5 +1,8 @@
 import { prisma } from "@/lib/prisma";
-import { computeSkinType } from "@/domain/skinType/computeSkinType";
+import {
+  computeSkinType,
+  type QuestionsJson,
+} from "@/domain/skinType/computeSkinType";
 
 // ✅ 질문 데이터(behavior / preference)
 // - 질문 텍스트/선택지/가중치 등 "테스트 설계" 자체가 들어있는 JSON
@@ -57,8 +60,8 @@ export default async function Page() {
    * computeSkinType는 이 둘을 합쳐서 결과를 만들어내는 것.
    */
   const computed = computeSkinType(
-    behaviorJson as any,
-    preferenceJson as any,
+    behaviorJson as QuestionsJson,
+    preferenceJson as QuestionsJson,
     answers,
   );
 

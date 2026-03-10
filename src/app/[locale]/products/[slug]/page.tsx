@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Locale as RouteLocale } from "@/app/lib/i18n/config";
 import { prisma } from "@/lib/prisma";
+import Image from "next/image";
 
 type DataLocale = "KO" | "EN" | "FR";
 type SkinTypeCode = "DS" | "OB" | "HS" | "CC" | "SC";
@@ -178,7 +179,14 @@ export default async function Page({
 
   if (!product) notFound();
 
-  const tr = pickTranslation(product.translations as any, dataLocale);
+  const tr = pickTranslation(
+    product.translations as Array<{
+      locale: "KO" | "EN" | "FR";
+      name: string;
+      description?: string | null;
+    }>,
+    dataLocale,
+  );
   const name = tr?.name ?? product.slug;
   const description = tr?.description ?? "";
 
@@ -219,12 +227,13 @@ export default async function Page({
         <section className="grid gap-6 rounded-3xl border border-black/10 bg-white p-6 lg:grid-cols-2 lg:p-8">
           {/* Left: Image */}
           <div className="rounded-3xl border border-black/10 bg-[#DBEBF1]/30 p-5">
-            <div className="aspect-square overflow-hidden rounded-2xl border border-black/5 bg-white">
+            <div className="relative aspect-square overflow-hidden rounded-2xl border border-black/5 bg-white">
               {product.imageUrl ? (
-                <img
+                <Image
                   src={product.imageUrl}
+                  fill
                   alt={name}
-                  className="h-full w-full object-cover"
+                  className="object-cover"
                 />
               ) : (
                 <div className="flex h-full items-center justify-center text-sm text-black/30">

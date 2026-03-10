@@ -5,6 +5,10 @@ import type {
   ProductCategory,
   SkinTypeCode,
   TagCode,
+  Product,
+  ProductTranslation,
+  ProductTag,
+  Tag,
 } from "@prisma/client";
 import type { RecommendationRule } from "./rules";
 
@@ -20,6 +24,11 @@ type PickParams = {
   rule: RecommendationRule;
 };
 
+type ProductWithRelations = Product & {
+  translations: ProductTranslation[];
+  tags: (ProductTag & { tag: Tag })[];
+};
+
 /**
  * ✅ 반환 타입(디버그용)
  * - product: 실제 추천 제품
@@ -30,7 +39,7 @@ type PickParams = {
  * 추천 결과가 “왜 Top3인지”가 눈에 보이기 때문에 디버깅/정책 조정이 쉬움.
  */
 export type PickedProduct = {
-  product: any; // 필요하면 Prisma 타입(Product + include ...)로 더 엄격히 만들 수 있음
+  product: ProductWithRelations; // 필요하면 Prisma 타입(Product + include ...)로 더 엄격히 만들 수 있음
   score: number;
   breakdown: {
     tagScore: number;

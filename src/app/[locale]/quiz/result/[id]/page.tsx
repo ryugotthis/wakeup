@@ -9,6 +9,34 @@ import ResultActions from "./ResultActions";
 type DataLocale = "KO" | "EN" | "FR";
 type RawText = string | Record<string, string>;
 
+type ProfileItem = { label: RawText; value: RawText };
+type IngredientRow = {
+  category: RawText;
+  ingredients: RawText;
+  benefits: RawText;
+};
+type AvoidRow = { category: RawText; ingredients: RawText; why: RawText };
+
+type ResultTemplate = {
+  skinType: string;
+  title: RawText;
+  sections: {
+    personality: { title: RawText; body: RawText };
+    skinProfile: { items?: ProfileItem[] };
+    goodIngredients: { title: RawText; rows?: IngredientRow[] };
+    avoidIngredients: { title: RawText; rows?: AvoidRow[] };
+    dailyRoutine: {
+      title: RawText;
+      morning?: Record<string, string[]>;
+      evening?: Record<string, string[]>;
+    };
+    weeklyCare: { title: RawText; items?: Record<string, string[]> };
+    tip: { title: RawText; body: RawText };
+  };
+};
+
+type ResultTemplatesJson = { templates: ResultTemplate[] };
+
 function routeLocaleToDataLocale(locale: string): DataLocale {
   switch (locale) {
     case "ko":
@@ -79,9 +107,9 @@ export default async function Page({
   if (!result) return notFound();
 
   const templates = (await import("@/../seed/seed.results.json"))
-    .default as any;
+    .default as ResultTemplatesJson;
   const template = templates.templates.find(
-    (t: any) => t.skinType === result.skinType,
+    (t) => t.skinType === result.skinType,
   );
   if (!template) return notFound();
 
@@ -92,17 +120,17 @@ export default async function Page({
     pickText(s.personality?.body, locale).split("\n")[0] || title;
 
   const typeValue = (s.skinProfile?.items ?? []).find(
-    (it: any) =>
+    (it) =>
       pickText(it.label, locale).toLowerCase() ===
       (locale === "FR" ? "type" : "type"),
   );
 
-  const goalItem = (s.skinProfile?.items ?? []).find((it: any) => {
+  const goalItem = (s.skinProfile?.items ?? []).find((it) => {
     const label = pickText(it.label, locale).toLowerCase();
     return label === "goal" || label === "objectif" || label === "목표";
   });
 
-  const concernItem = (s.skinProfile?.items ?? []).find((it: any) => {
+  const concernItem = (s.skinProfile?.items ?? []).find((it) => {
     const label = pickText(it.label, locale).toLowerCase();
     return label === "concern" || label === "préoccupation" || label === "고민";
   });
@@ -198,7 +226,7 @@ export default async function Page({
 
         <Section title={pickText(s.goodIngredients.title, locale)}>
           <div className="space-y-4">
-            {(s.goodIngredients.rows ?? []).map((row: any, idx: number) => (
+            {(s.goodIngredients.rows ?? []).map((row, idx) => (
               <div
                 key={idx}
                 className="rounded-2xl border border-black/10 bg-white p-5"
@@ -219,7 +247,7 @@ export default async function Page({
 
         <Section title={pickText(s.avoidIngredients.title, locale)}>
           <div className="space-y-4">
-            {(s.avoidIngredients.rows ?? []).map((row: any, idx: number) => (
+            {(s.avoidIngredients.rows ?? []).map((row, idx) => (
               <div
                 key={idx}
                 className="rounded-2xl border border-black/10 bg-white p-5"

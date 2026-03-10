@@ -11,6 +11,11 @@ function isUuid(v: unknown): v is string {
   );
 }
 
+function getString(obj: Record<string, unknown>, key: string): string | null {
+  const val = obj[key];
+  return typeof val === "string" ? val : null;
+}
+
 export async function POST(req: Request) {
   try {
     const body = (await req.json().catch(() => null)) as {
@@ -40,14 +45,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
 
-    const fullName =
-      (user.user_metadata as any)?.full_name ??
-      (user.user_metadata as any)?.name ??
-      null;
+    const meta = user.user_metadata as Record<string, unknown>;
+    const fullName = getString(meta, "full_name") ?? getString(meta, "name");
+    const avatarUrl = getString(meta, "avatar_url");
 
-    const avatarUrl = (user.user_metadata as any)?.avatar_url ?? null;
-
-    // ✅ 핵심: User upsert → SavedResult upsert 를 한 트랜잭션으로
     const saved = await prisma.$transaction(async (tx) => {
       await tx.user.upsert({
         where: { id: user.id },
@@ -82,14 +83,14 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ ok: true, saved });
-  } catch (e: any) {
+  } catch (e: unknown) {
+    const err = e instanceof Error ? e : null;
     console.error("[api/results/save] error:", e);
     return NextResponse.json(
       {
         error: "Server error",
-        name: e?.name,
-        message: e?.message,
-        code: e?.code,
+        name: err?.name,
+        message: err?.message,
       },
       { status: 500 },
     );

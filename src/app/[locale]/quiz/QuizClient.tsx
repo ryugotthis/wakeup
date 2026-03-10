@@ -26,19 +26,36 @@ type UIQuestion = {
   options: { id: string; text: string }[];
 };
 
+type RawOption = {
+  id: string; // TestChoice.key (예: "A", "B")
+  text: RawText; // TestChoiceTranslation.text
+};
+
+type RawQuestion = {
+  code: string; // TestQuestionCode (예: "Q1")
+  order: number; // TestQuestion.order
+  text: RawText; // TestQuestionTranslation.text
+  options?: RawOption[];
+};
+
+type RawQuizJson = {
+  questions?: RawQuestion[];
+};
+
 export default function QuizClient({ locale }: { locale: Locale }) {
   const router = useRouter();
 
   const questions: UIQuestion[] = useMemo(() => {
-    const b = behaviorJson as any;
-    const p = preferenceJson as any;
+    const b = behaviorJson as RawQuizJson;
+    const p = preferenceJson as RawQuizJson;
 
     return [...(b.questions ?? []), ...(p.questions ?? [])]
       .map((q) => ({
         code: q.code,
         order: q.order,
         text: pickText(q.text, locale),
-        options: (q.options ?? []).map((o: any) => ({
+        options: (q.options ?? []).map((o) => ({
+          // any 제거
           id: o.id,
           text: pickText(o.text, locale),
         })),

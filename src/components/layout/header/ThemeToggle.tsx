@@ -1,30 +1,24 @@
 // src/components/header/ThemeToggle.tsx
 "use client";
 
-/**
- * 역할: 다크모드 토글(Client).
- * - html에 'dark' 클래스를 붙였다 떼는 방식
- * - localStorage에 theme 저장
- */
-
 import { useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === "undefined") return "light";
+    return (localStorage.getItem("theme") as Theme | null) ?? "light";
+  });
 
   useEffect(() => {
-    const saved = (localStorage.getItem("theme") as Theme | null) ?? "light";
-    setTheme(saved);
-    document.documentElement.classList.toggle("dark", saved === "dark");
-  }, []);
+    document.documentElement.classList.toggle("dark", theme === "dark");
+  }, [theme]);
 
   const toggle = () => {
     const next: Theme = theme === "dark" ? "light" : "dark";
     setTheme(next);
     localStorage.setItem("theme", next);
-    document.documentElement.classList.toggle("dark", next === "dark");
   };
 
   return (
