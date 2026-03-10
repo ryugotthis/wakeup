@@ -1,9 +1,9 @@
 import Link from "next/link";
 import type { Locale as RouteLocale } from "@/app/lib/i18n/config";
-import { prisma } from "@/lib/prisma";
 import { createClient } from "@/app/lib/supabase/server";
 import SktiDropdown from "./SktiDropdown";
 import ProductsGridClient from "./ProductsGridClient";
+import { getProducts } from "@/app/lib/products/getProducts";
 
 type DataLocale = "KO" | "EN" | "FR";
 type ProductCategory =
@@ -36,19 +36,6 @@ function t(routeLocale: RouteLocale, ko: string, en: string, fr: string) {
   return routeLocale === "ko" ? ko : routeLocale === "fr" ? fr : en;
 }
 
-function pickTranslation<
-  T extends {
-    locale: "KO" | "EN" | "FR";
-    name: string;
-    description?: string | null;
-  },
->(translations: T[], locale: DataLocale) {
-  const byLocale = translations.find((x) => x.locale === locale);
-  const fallback =
-    translations.find((x) => x.locale === "EN") ?? translations[0];
-  return byLocale ?? fallback ?? null;
-}
-
 function cn(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
 }
@@ -72,16 +59,50 @@ function Chip({
   );
 }
 
-const CATEGORY_OPTIONS: Array<{ value: ProductCategory; label: string }> = [
-  { value: "TONER", label: "Toner" },
-  { value: "PAD", label: "Pad" },
-  { value: "ESSENCE", label: "Essence" },
-  { value: "SERUM", label: "Serum" },
-  { value: "AMPOULE", label: "Ampoule" },
-  { value: "CREAM", label: "Cream" },
-  { value: "MIST", label: "Mist" },
-  { value: "OIL", label: "Oil" },
-  { value: "MASK_PACK", label: "Mask pack" },
+const CATEGORY_OPTIONS: Array<{
+  value: ProductCategory;
+  label: {
+    ko: string;
+    en: string;
+    fr: string;
+  };
+}> = [
+  {
+    value: "TONER",
+    label: { ko: "토너", en: "Toner", fr: "Toner" },
+  },
+  {
+    value: "PAD",
+    label: { ko: "패드", en: "Pad", fr: "Pad" },
+  },
+  {
+    value: "ESSENCE",
+    label: { ko: "에센스", en: "Essence", fr: "Essence" },
+  },
+  {
+    value: "SERUM",
+    label: { ko: "세럼", en: "Serum", fr: "Sérum" },
+  },
+  {
+    value: "AMPOULE",
+    label: { ko: "앰플", en: "Ampoule", fr: "Ampoule" },
+  },
+  {
+    value: "CREAM",
+    label: { ko: "크림", en: "Cream", fr: "Crème" },
+  },
+  {
+    value: "MIST",
+    label: { ko: "미스트", en: "Mist", fr: "Brume" },
+  },
+  {
+    value: "OIL",
+    label: { ko: "오일", en: "Oil", fr: "Huile" },
+  },
+  {
+    value: "MASK_PACK",
+    label: { ko: "마스크팩", en: "Mask pack", fr: "Masque" },
+  },
 ];
 
 function isSkinType(v: unknown): v is SkinTypeCode {
@@ -130,69 +151,20 @@ export default async function Page({
   );
 
   const PAGE_SIZE = 12;
-  const skip = (page - 1) * PAGE_SIZE;
 
-  const where: any = {
-    isPublished: true,
-    ...(cat ? { category: cat } : {}),
-    ...(skinType ? { skinTypes: { has: skinType } } : {}),
-    ...(q
-      ? {
-          translations: {
-            some: {
-              OR: [
-                { name: { contains: q, mode: "insensitive" } },
-                { description: { contains: q, mode: "insensitive" } },
-              ],
-            },
-          },
-        }
-      : {}),
-  };
-
-  const [total, products] = await Promise.all([
-    prisma.product.count({ where }),
-    prisma.product.findMany({
-      where,
-      orderBy: { updatedAt: "desc" },
-      skip,
-      take: PAGE_SIZE,
-      select: {
-        id: true,
-        slug: true,
-        brand: true,
-        category: true,
-        imageUrl: true,
-        skinTypes: true,
-        translations: {
-          select: { locale: true, name: true, description: true },
-        },
-        tags: {
-          select: {
-            tag: {
-              select: {
-                code: true,
-                translations: { select: { locale: true, label: true } },
-              },
-            },
-          },
-          orderBy: { priority: "asc" },
-          take: 4,
-        },
-        ...(user
-          ? {
-              bookmarks: {
-                where: { userId: user.id },
-                select: { id: true },
-                take: 1,
-              },
-            }
-          : {}),
-      },
-    }),
-  ]);
-
-  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const {
+    total,
+    totalPages,
+    items: productItems,
+  } = await getProducts({
+    userId: user?.id,
+    locale: dataLocale,
+    q,
+    cat,
+    skinType,
+    page,
+    pageSize: PAGE_SIZE,
+  });
 
   const buildUrl = (next: Record<string, string | undefined>) => {
     const url = new URL(`http://local/${routeLocale}/products`);
@@ -215,35 +187,17 @@ export default async function Page({
   };
 
   const selectedCategoryLabel = cat
-    ? (CATEGORY_OPTIONS.find((c) => c.value === cat)?.label ?? cat)
+    ? (() => {
+        const category = CATEGORY_OPTIONS.find((c) => c.value === cat);
+        if (!category) return cat;
+
+        return routeLocale === "ko"
+          ? category.label.ko
+          : routeLocale === "fr"
+            ? category.label.fr
+            : category.label.en;
+      })()
     : null;
-
-  const productItems = products.map((p) => {
-    const tr = pickTranslation(p.translations as any, dataLocale);
-    const name = tr?.name ?? p.slug;
-    const desc = tr?.description ?? "";
-
-    const tagLabels =
-      p.tags?.map((x) => {
-        const tt =
-          x.tag.translations.find((z) => z.locale === dataLocale) ??
-          x.tag.translations.find((z) => z.locale === "EN") ??
-          x.tag.translations[0];
-        return tt?.label ?? x.tag.code;
-      }) ?? [];
-
-    return {
-      id: p.id,
-      slug: p.slug,
-      category: p.category,
-      name,
-      brand: p.brand,
-      description: desc,
-      imageUrl: p.imageUrl,
-      tagLabels,
-      isBookmarked: "bookmarks" in p ? p.bookmarks.length > 0 : false,
-    };
-  });
 
   return (
     <main className="min-h-screen bg-[#DBEBF1]/40 px-6 py-14">
@@ -308,6 +262,13 @@ export default async function Page({
               {CATEGORY_OPTIONS.map((c) => {
                 const active = cat === c.value;
 
+                const label =
+                  routeLocale === "ko"
+                    ? c.label.ko
+                    : routeLocale === "fr"
+                      ? c.label.fr
+                      : c.label.en;
+
                 return (
                   <Link
                     key={c.value}
@@ -319,7 +280,7 @@ export default async function Page({
                         : "border-black/15 bg-white text-black hover:bg-black/5",
                     )}
                   >
-                    {c.label}
+                    {label}
                   </Link>
                 );
               })}
