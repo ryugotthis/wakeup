@@ -179,7 +179,6 @@ export default async function Page({
           orderBy: { priority: "asc" },
           take: 4,
         },
-
         ...(user
           ? {
               bookmarks: {
@@ -194,6 +193,26 @@ export default async function Page({
   ]);
 
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+
+  const buildUrl = (next: Record<string, string | undefined>) => {
+    const url = new URL(`http://local/${routeLocale}/products`);
+
+    const base: Record<string, string | undefined> = {
+      q: q || undefined,
+      cat: cat || undefined,
+      skinType: skinType || undefined,
+      page: String(page),
+    };
+
+    const merged = { ...base, ...next };
+
+    Object.entries(merged).forEach(([k, v]) => {
+      if (!v) url.searchParams.delete(k);
+      else url.searchParams.set(k, v);
+    });
+
+    return `${url.pathname}${url.search}`;
+  };
 
   const selectedCategoryLabel = cat
     ? (CATEGORY_OPTIONS.find((c) => c.value === cat)?.label ?? cat)
@@ -229,7 +248,6 @@ export default async function Page({
   return (
     <main className="min-h-screen bg-[#DBEBF1]/40 px-6 py-14">
       <div className="mx-auto max-w-6xl space-y-6">
-        {/* HEADER */}
         <header className="rounded-3xl border border-black/10 bg-white p-8">
           <p className="text-sm font-medium text-black/50">
             {t(routeLocale, "제품", "Products", "Produits")}
@@ -268,22 +286,149 @@ export default async function Page({
           </div>
         </header>
 
-        {/* FILTER */}
         <section className="space-y-4 rounded-3xl border border-black/10 bg-white p-6">
-          <SktiDropdown
-            routeLocale={routeLocale}
-            cat={cat}
-            q={q}
-            skinType={skinType}
-          />
+          <div>
+            <p className="text-xs font-medium text-black/50">
+              {t(routeLocale, "카테고리", "Category", "Catégorie")}
+            </p>
+
+            <div className="mt-3 flex flex-wrap gap-2">
+              <Link
+                href={buildUrl({ cat: undefined, page: "1" })}
+                className={cn(
+                  "rounded-full border px-4 py-2 text-sm font-medium transition",
+                  !cat
+                    ? "border-black bg-black text-white"
+                    : "border-black/15 bg-white text-black hover:bg-black/5",
+                )}
+              >
+                {t(routeLocale, "전체", "All", "Tous")}
+              </Link>
+
+              {CATEGORY_OPTIONS.map((c) => {
+                const active = cat === c.value;
+
+                return (
+                  <Link
+                    key={c.value}
+                    href={buildUrl({ cat: c.value, page: "1" })}
+                    className={cn(
+                      "rounded-full border px-4 py-2 text-sm font-medium transition",
+                      active
+                        ? "border-black bg-black text-white"
+                        : "border-black/15 bg-white text-black hover:bg-black/5",
+                    )}
+                  >
+                    {c.label}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div className="flex items-end gap-3">
+              <SktiDropdown
+                routeLocale={routeLocale}
+                cat={cat}
+                q={q}
+                skinType={skinType}
+              />
+            </div>
+
+            <form
+              action={`/${routeLocale}/products`}
+              method="GET"
+              className="flex items-center gap-2"
+            >
+              {cat ? <input type="hidden" name="cat" value={cat} /> : null}
+              {skinType ? (
+                <input type="hidden" name="skinType" value={skinType} />
+              ) : null}
+              <input type="hidden" name="page" value="1" />
+
+              <div>
+                <label className="block text-xs font-medium text-black/50">
+                  {t(routeLocale, "검색", "Search", "Rechercher")}
+                </label>
+                <input
+                  name="q"
+                  defaultValue={q}
+                  placeholder={t(
+                    routeLocale,
+                    "제품명",
+                    "Product name",
+                    "Nom du produit",
+                  )}
+                  className="mt-2 h-10 w-full rounded-full border border-black/10 bg-white px-4 text-sm outline-none focus:border-black/30 sm:w-[260px]"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="mt-6 h-10 rounded-full bg-black px-5 text-sm font-medium text-white transition hover:opacity-90"
+              >
+                {t(routeLocale, "검색", "Go", "OK")}
+              </button>
+            </form>
+          </div>
         </section>
 
-        {/* PRODUCTS GRID */}
-        <ProductsGridClient
-          routeLocale={routeLocale}
-          products={productItems}
-          isAuthed={isAuthed}
-        />
+        {productItems.length === 0 ? (
+          <section className="rounded-3xl border border-black/10 bg-white p-8">
+            <p className="text-sm text-black/60">
+              {t(
+                routeLocale,
+                "조건에 맞는 제품이 없어요.",
+                "No products found.",
+                "Aucun produit trouvé.",
+              )}
+            </p>
+          </section>
+        ) : (
+          <ProductsGridClient
+            routeLocale={routeLocale}
+            products={productItems}
+            isAuthed={isAuthed}
+          />
+        )}
+
+        {totalPages > 1 && (
+          <nav className="flex items-center justify-between rounded-3xl border border-black/10 bg-white p-4">
+            <p className="text-xs text-black/50">
+              {t(routeLocale, "페이지", "Page", "Page")} {page} / {totalPages} ·{" "}
+              {t(routeLocale, "총", "Total", "Total")} {total}
+            </p>
+
+            <div className="flex gap-2">
+              <Link
+                aria-disabled={page <= 1}
+                className={cn(
+                  "rounded-full border border-black/20 bg-white px-4 py-2 text-sm font-medium transition",
+                  page <= 1
+                    ? "pointer-events-none text-black/30"
+                    : "text-black hover:bg-[#DBEBF1]",
+                )}
+                href={buildUrl({ page: String(page - 1) })}
+              >
+                {t(routeLocale, "이전", "Prev", "Préc")}
+              </Link>
+
+              <Link
+                aria-disabled={page >= totalPages}
+                className={cn(
+                  "rounded-full border border-black/20 bg-white px-4 py-2 text-sm font-medium transition",
+                  page >= totalPages
+                    ? "pointer-events-none text-black/30"
+                    : "text-black hover:bg-[#DBEBF1]",
+                )}
+                href={buildUrl({ page: String(page + 1) })}
+              >
+                {t(routeLocale, "다음", "Next", "Suiv")}
+              </Link>
+            </div>
+          </nav>
+        )}
       </div>
     </main>
   );
