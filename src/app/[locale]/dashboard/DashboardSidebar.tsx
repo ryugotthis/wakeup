@@ -24,9 +24,9 @@ export default function DashboardSidebar({ locale }: { locale: Locale }) {
       label: t(locale, "SKTI 결과", "SKTI results", "Résultats SKTI"),
     },
     {
-      key: "favorites",
-      href: `/${locale}/dashboard/favorites`,
-      label: t(locale, "찜 목록", "Favorites", "Favoris"),
+      key: "bookmarks",
+      href: `/${locale}/dashboard/bookmarks`,
+      label: t(locale, "찜 목록", "Bookmarks", "favoris"),
     },
     {
       key: "products",
