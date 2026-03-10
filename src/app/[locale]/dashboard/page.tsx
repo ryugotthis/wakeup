@@ -27,9 +27,7 @@ export default async function Page({
   } = await supabase.auth.getUser();
 
   if (!user?.id) {
-    redirect(
-      `/${routeLocale}/login?next=${encodeURIComponent(`/${routeLocale}/dashboard`)}`,
-    );
+    redirect(`/${routeLocale}`);
   }
 
   // ✅ SKTI(저장한 테스트 결과) 목록

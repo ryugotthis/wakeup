@@ -19,9 +19,7 @@ export default async function Page({
   } = await supabase.auth.getUser();
 
   if (!user?.id) {
-    redirect(
-      `/${routeLocale}/login?next=${encodeURIComponent(`/${routeLocale}/dashboard/account`)}`,
-    );
+    redirect(`/${routeLocale}`);
   }
 
   const email = user.email ?? "-";
