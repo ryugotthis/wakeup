@@ -1,6 +1,6 @@
 // app/[locale]/layout.tsx
 import type { ReactNode } from "react";
-import type { Locale } from "@/app/lib/i18n/config";
+import type { Locale as RouteLocale } from "@/app/lib/i18n/config";
 import Header from "@/components/layout/Header";
 
 export default async function LocaleLayout({
@@ -8,13 +8,13 @@ export default async function LocaleLayout({
   params,
 }: {
   children: ReactNode;
-  params: Promise<{ locale: Locale }>;
+  params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
 
   return (
     <>
-      <Header locale={locale} />
+      <Header locale={locale as RouteLocale} />
       {children}
     </>
   );

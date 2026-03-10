@@ -7,7 +7,7 @@ export default async function DashboardLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: RouteLocale }>;
+  params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
 
@@ -16,7 +16,7 @@ export default async function DashboardLayout({
       <div className="mx-auto max-w-7xl px-6 py-10">
         <div className="grid grid-cols-[280px_1fr] gap-6">
           {/* Sidebar */}
-          <DashboardSidebar locale={locale} />
+          <DashboardSidebar locale={locale as RouteLocale} />
 
           {/* Main content */}
           <section className="min-w-0">{children}</section>
