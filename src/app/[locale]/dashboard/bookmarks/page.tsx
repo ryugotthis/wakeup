@@ -22,9 +22,7 @@ export default async function Page({
 
   if (!user?.id) {
     redirect(
-      `/${routeLocale}/login?next=${encodeURIComponent(
-        `/${routeLocale}/dashboard/bookmarks`,
-      )}`,
+      `/${routeLocale}`,
     );
   }
 
