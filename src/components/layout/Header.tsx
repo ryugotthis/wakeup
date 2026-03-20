@@ -1,6 +1,7 @@
 // src/components/layout/Header.tsx (or src/components/header/Header.tsx)
 
 import Link from "next/link";
+import Image from "next/image";
 import { createClient } from "@/app/lib/supabase/server";
 import type { Locale } from "@/app/lib/i18n/config";
 
@@ -17,15 +18,18 @@ export default async function Header({ locale }: { locale: Locale }) {
 
   return (
     <header className="sticky top-0 z-50 border-b border-black/10 bg-white/90 backdrop-blur">
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
+      <div className="mx-6 flex h-14 max-w-6xl items-center justify-between px-6">
         {/* Left Section */}
         <div className="flex items-center gap-6">
           {/* Logo */}
-          <Link
-            href={`/${locale}`}
-            className="text-lg font-semibold tracking-tight text-black hover:opacity-80 transition"
-          >
-            WakeUp
+          <Link href={`/${locale}`} className="">
+            <Image
+              src="/images/brand/wakeup-logo.png"
+              alt="WakeUp logo"
+              width={120}
+              height={40}
+              priority
+            />
           </Link>
 
           {/* Navigation */}
