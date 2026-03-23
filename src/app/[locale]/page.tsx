@@ -129,14 +129,14 @@ export default async function Page({
             </div>
 
             {/* 오른쪽 단계 (번역 대상) */}
-            <div className="flex w-full flex-col gap-6 text-left sm:gap-7 lg:gap-8">
+            <div className="flex w-full flex-col items-center sm:items-stretch gap-6 text-left sm:gap-7 lg:gap-8">
               {dict.home.steps.map((step: string, index: number) => {
                 const offsets = ["lg:ml-0", "lg:ml-12", "lg:ml-8", "lg:ml-2"];
 
                 const numberPositions = [
                   "left-2 -top-5 sm:-top-6 lg:left-2 lg:-top-7",
-                  "right-3 -top-5 sm:right-5 sm:-top-6 lg:right-6 lg:-top-7",
-                  "right-3 -top-5 sm:right-6 sm:-top-6 lg:right-8 lg:-top-7",
+                  "right-3 -top-5 sm:right-28 sm:-top-6 lg:right-34 lg:-top-7",
+                  "right-3 -top-5 sm:right-28 sm:-top-6 lg:right-37 lg:-top-7",
                   "left-2 -top-5 sm:-top-6 lg:left-2 lg:-top-7",
                 ];
 
@@ -151,7 +151,7 @@ export default async function Page({
                       {`0${index + 1}`}
                     </span>
 
-                    <div className="flex min-h-[56px] w-full max-w-[260px] items-center justify-center rounded-full bg-white px-5 py-3 text-center shadow-sm sm:min-h-[64px] sm:max-w-[300px] sm:px-6 lg:min-h-[72px] lg:max-w-[340px] lg:px-8">
+                    <div className="flex min-h-[56px] w-80 sm:w-full max-w-[260px] items-center justify-center rounded-full bg-white px-5 py-3 text-center shadow-sm sm:min-h-[64px] sm:max-w-[300px] sm:px-6 lg:min-h-[72px] lg:max-w-[340px] lg:px-8">
                       <span className="text-sm font-medium text-black sm:text-base lg:text-lg">
                         {step}
                       </span>
