@@ -17,7 +17,7 @@ export default async function Page({
   return (
     <main className="flex flex-col">
       {/* ================= HERO ================= */}
-      <section className="relative bg-white px-6 py-20">
+      <section className="relative z-0 bg-white px-6 py-20">
         <div className="mx-auto max-w-6xl">
           {/* 슬로건은 3개 언어 모두 영어 고정 */}
           <h1 className="text-5xl leading-tight tracking-tight text-black sm:text-6xl">
@@ -49,15 +49,64 @@ export default async function Page({
               {dict.home.ctaSecondary}
             </Link>
           </div>
-
-          <p className="mt-1 ml-4 text-xs text-black/60">
-            {dict.home.ctaSubtext}
-          </p>
+          <div className="flex items-stretch">
+            <p className="mt-1 ml-4 text-base text-black/60">
+              {dict.home.ctaSubtext}
+            </p>
+            <ul className="mt-1 ml-2 w-3 flex gap-1">
+              <li className="relative h-6 w-6 shrink-0">
+                <Image
+                  src="/images/brand/wakeup-skin-ds-icon.png"
+                  alt="WakeUp Hero Face"
+                  fill
+                  className="object-contain"
+                />
+              </li>
+              <li className="relative h-6 w-6 shrink-0">
+                <Image
+                  src="/images/brand/wakeup-skin-ob-icon.png"
+                  alt="WakeUp Hero Face"
+                  fill
+                  className="object-contain"
+                />
+              </li>
+              <li className="relative h-6 w-6 shrink-0">
+                <Image
+                  src="/images/brand/wakeup-skin-sc-icon.png"
+                  alt="WakeUp Hero Face"
+                  fill
+                  className="object-contain"
+                />
+              </li>
+              <li className="relative h-6 w-6 shrink-0">
+                <Image
+                  src="/images/brand/wakeup-skin-hs-icon.png"
+                  alt="WakeUp Hero Face"
+                  fill
+                  className="object-contain"
+                />
+              </li>
+              <li className="relative h-6 w-6 shrink-0">
+                <Image
+                  src="/images/brand/wakeup-skin-cc-icon.png"
+                  alt="WakeUp Hero Face"
+                  fill
+                  className="object-contain"
+                />
+              </li>
+            </ul>
+          </div>
         </div>
 
         {/* 오른쪽 일러스트 자리 (SVG or 이미지 넣기) */}
-        <div className="pointer-events-none absolute right-0 top-0 h-full w-1/2 opacity-20">
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-1/2 -z-10">
           {/* 여기에 SVG 얼굴 일러스트 넣으면 됨 */}
+          <Image
+            src="/images/brand/wakeup-hero-illustration.png"
+            alt="WakeUp Hero Face"
+            fill
+            className="object-contain "
+          />
         </div>
       </section>
 
