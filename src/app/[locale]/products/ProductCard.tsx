@@ -62,7 +62,7 @@ export default function ProductCard({
   return (
     <Link
       href={`/${routeLocale}/products/${slug}`}
-      className="group block  min-w-0"
+      className="group block min-w-0"
       aria-label={name}
     >
       <article className="overflow-hidden rounded-3xl border border-black/10 bg-white transition hover:-translate-y-0.5 hover:shadow-md">
