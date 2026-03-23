@@ -1,5 +1,3 @@
-// src/components/layout/Header.tsx (or src/components/header/Header.tsx)
-
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/app/lib/supabase/server";
@@ -18,32 +16,33 @@ export default async function Header({ locale }: { locale: Locale }) {
 
   return (
     <header className="sticky top-0 z-50 border-b border-black/10 bg-white/90 backdrop-blur">
-      <div className="mx-6 flex h-14 max-w-6xl items-center justify-between px-6">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:h-18 sm:px-6 lg:px-8">
         {/* Left Section */}
-        <div className="flex items-center gap-6">
+        <div className="flex min-w-0 items-center gap-3 sm:gap-5 lg:gap-6">
           {/* Logo */}
-          <Link href={`/${locale}`} className="">
+          <Link href={`/${locale}`} className="shrink-0">
             <Image
               src="/images/brand/wakeup-logo.png"
               alt="WakeUp logo"
               width={120}
-              height={40}
+              height={26}
               priority
+              className="h-8 w-auto sm:h-10"
             />
           </Link>
 
           {/* Navigation */}
-          <nav className="flex items-center gap-4 text-sm font-medium">
+          <nav className="flex items-center gap-1 sm:gap-2 lg:gap-4 text-sm font-medium sm:text-base">
             <Link
               href={`/${locale}/quiz`}
-              className="px-3 py-1.5 rounded-full hover:bg-[#DBEBF1] transition"
+              className="rounded-full px-2 py-1 text-center transition hover:bg-[#DBEBF1] sm:px-3 sm:py-1.5"
             >
               Test
             </Link>
 
             <Link
               href={`/${locale}/products`}
-              className="px-3 py-1.5 rounded-full hover:bg-[#DBEBF1] transition"
+              className="rounded-full px-2 py-1 text-center transition hover:bg-[#DBEBF1] sm:px-3 sm:py-1.5"
             >
               Products
             </Link>
@@ -51,7 +50,7 @@ export default async function Header({ locale }: { locale: Locale }) {
         </div>
 
         {/* Right Section */}
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
           <SearchButton locale={locale} />
           <ThemeToggle />
           <LanguageSwitcher currentLocale={locale} />

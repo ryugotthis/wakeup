@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { Locale } from "@/app/lib/i18n/config";
 import { getDictionary } from "@/app/lib/i18n/getDictionary";
+import Image from "next/image";
 
 export default async function Page({
   params,
@@ -67,31 +68,48 @@ export default async function Page({
             {dict.home.howTitle}
           </h2>
 
-          <div className="mt-14 grid gap-8 sm:grid-cols-2 items-center">
+          <div className="mt-14 grid sm:grid-cols-2 items-center">
             {/* 왼쪽 배지 (브랜드 문구는 고정 영어) */}
-            <div className="flex justify-center">
-              <div className="flex h-40 w-40 items-center justify-center rounded-full border border-black text-center">
-                <div>
-                  <p className="text-xs tracking-widest">ADD K-BEAUTY</p>
-                  <p className="text-5xl font-semibold my-1">W</p>
-                  <p className="text-xs tracking-widest">TO YOUR SKIN</p>
-                </div>
-              </div>
+            <div className="relative w-full h-full ">
+              <Image
+                src="/images/brand/wakeup-badge.png"
+                alt="WakeUp logo"
+                fill
+                className="absolute object-contain"
+              />
             </div>
 
             {/* 오른쪽 단계 (번역 대상) */}
-            <div className="space-y-5 text-left">
-              {dict.home.steps.map((step: string, index: number) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-4 rounded-full bg-white px-6 py-3"
-                >
-                  <span className="text-sm font-medium text-black/60">
-                    {`0${index + 1}`}
-                  </span>
-                  <span className="text-sm font-medium text-black">{step}</span>
-                </div>
-              ))}
+            <div className="flex w-full flex-col gap-6 text-left sm:gap-7 lg:gap-8">
+              {dict.home.steps.map((step: string, index: number) => {
+                const offsets = ["lg:ml-0", "lg:ml-12", "lg:ml-8", "lg:ml-2"];
+
+                const numberPositions = [
+                  "left-2 -top-5 sm:-top-6 lg:left-2 lg:-top-7",
+                  "right-3 -top-5 sm:right-5 sm:-top-6 lg:right-6 lg:-top-7",
+                  "right-3 -top-5 sm:right-6 sm:-top-6 lg:right-8 lg:-top-7",
+                  "left-2 -top-5 sm:-top-6 lg:left-2 lg:-top-7",
+                ];
+
+                return (
+                  <div
+                    key={index}
+                    className={`relative ${offsets[index] ?? "lg:ml-0"}`}
+                  >
+                    <span
+                      className={`absolute ${numberPositions[index] ?? "left-2 -top-5"} text-3xl font-light tracking-tight text-black/35 sm:text-4xl lg:text-5xl`}
+                    >
+                      {`0${index + 1}`}
+                    </span>
+
+                    <div className="flex min-h-[56px] w-full max-w-[260px] items-center justify-center rounded-full bg-white px-5 py-3 text-center shadow-sm sm:min-h-[64px] sm:max-w-[300px] sm:px-6 lg:min-h-[72px] lg:max-w-[340px] lg:px-8">
+                      <span className="text-sm font-medium text-black sm:text-base lg:text-lg">
+                        {step}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
