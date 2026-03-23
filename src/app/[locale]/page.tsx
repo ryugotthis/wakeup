@@ -171,7 +171,7 @@ export default async function Page({
           Wake Up Your Skin, Empower Your Glow
         </h3>
 
-        <div className="mt-6">
+        <div className="mt-6 hover:scale-105">
           <Link
             href={`/${locale}/quiz`}
             className="rounded-full bg-black px-6 py-3 text-sm font-medium text-white hover:opacity-90 transition"
