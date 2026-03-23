@@ -44,16 +44,16 @@ export default async function Page({
 
             <Link
               href={`/${locale}/products`}
-              className="rounded-full border border-black/30 px-5 py-2.5 text-sm text-black/70 transition hover:bg-black hover:text-white"
+              className="rounded-full border border-black/30 px-5 py-2.5 text-center text-sm text-black/70 transition hover:bg-black hover:text-white"
             >
               {dict.home.ctaSecondary}
             </Link>
           </div>
           <div className="flex items-stretch">
-            <p className="mt-1 ml-4 text-base text-black/60">
+            <p className="mt-1 sm:ml-4 text-base tracking-tighter text-black/60">
               {dict.home.ctaSubtext}
             </p>
-            <ul className="mt-1 ml-2 w-3 flex gap-1">
+            <ul className="mt-1 ml-2 w-3 flex gap-0.5">
               <li className="relative h-6 w-6 shrink-0">
                 <Image
                   src="/images/brand/wakeup-skin-ds-icon.png"
