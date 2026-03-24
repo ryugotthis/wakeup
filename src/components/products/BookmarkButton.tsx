@@ -13,6 +13,7 @@ type BookmarkButtonProps = {
   initialBookmarked?: boolean;
   isAuthed: boolean;
   onRequireLogin?: (productId: string) => void;
+  onRemoved?: (productId: string) => void;
   mode?: "normal" | "remove-only";
 };
 
@@ -22,6 +23,7 @@ export default function BookmarkButton({
   initialBookmarked = false,
   isAuthed,
   onRequireLogin,
+  onRemoved,
   mode = "normal",
 }: BookmarkButtonProps) {
   const router = useRouter();
@@ -61,16 +63,13 @@ export default function BookmarkButton({
 
     if (loading) return;
 
-    // ⭐ bookmarks 페이지용
     if (mode === "remove-only") {
       setLoading(true);
 
       try {
         await removeBookmark(productId);
         setBookmarked(false);
-
-        // 카드 목록 갱신
-        router.refresh();
+        onRemoved?.(productId);
       } catch (error) {
         console.error(error);
       } finally {
@@ -80,7 +79,6 @@ export default function BookmarkButton({
       return;
     }
 
-    // ⭐ products 페이지용
     if (!isAuthed) {
       onRequireLogin?.(productId);
       return;

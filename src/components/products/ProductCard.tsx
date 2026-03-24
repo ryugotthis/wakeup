@@ -44,6 +44,7 @@ type ProductCardProps = {
   initialBookmarked?: boolean;
   onRequireLogin?: (productId: string) => void;
   bookmarkMode?: "normal" | "remove-only";
+  onBookmarkRemoved?: (productId: string) => void;
 };
 
 export default function ProductCard({
