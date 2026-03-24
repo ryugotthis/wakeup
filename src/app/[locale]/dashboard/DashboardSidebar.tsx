@@ -1,4 +1,3 @@
-// src/app/[locale]/dashboard/DashboardSidebar.tsx
 "use client";
 
 import Link from "next/link";
@@ -26,7 +25,7 @@ export default function DashboardSidebar({ locale }: { locale: Locale }) {
     {
       key: "bookmarks",
       href: `/${locale}/dashboard/bookmarks`,
-      label: t(locale, "찜 목록", "Bookmarks", "favoris"),
+      label: t(locale, "찜 목록", "Bookmarks", "Favoris"),
     },
     {
       key: "products",
@@ -45,74 +44,104 @@ export default function DashboardSidebar({ locale }: { locale: Locale }) {
     },
   ];
 
-  // ✅ active 판정:
-  // - /ko/dashboard => saved
-  // - /ko/dashboard/xxx => 그 메뉴
-  // - /ko/products => products
   const isActive = (href: string) => {
-    if (href === `/${locale}/dashboard`) {
-      return pathname === href; // 기본 값은 정확히 /dashboard 일 때만
-    }
+    if (href === `/${locale}/dashboard`) return pathname === href;
     return pathname?.startsWith(href);
   };
 
   return (
-    <aside className="rounded-3xl border border-black/10 bg-white p-4 sticky top-6 h-[calc(100vh-3rem)]">
-      <div className="px-2 py-2">
-        <p className="text-xs font-medium text-black/40">WakeUp</p>
-        <h2 className="mt-1 text-lg font-semibold text-black">
-          {t(locale, "대시보드", "Dashboard", "Tableau de bord")}
-        </h2>
+    <>
+      {/* Mobile / Tablet */}
+      <div className="lg:hidden">
+        <div className="rounded-3xl border border-black/10 bg-white p-3">
+          <div className="px-1 pb-2">
+            <p className="text-xs font-medium text-black/40">WakeUp</p>
+            <h2 className="mt-1 text-base font-semibold text-black">
+              {t(locale, "대시보드", "Dashboard", "Tableau de bord")}
+            </h2>
+          </div>
+
+          <nav className="flex gap-2 overflow-x-auto pb-1">
+            {items.map((item) => {
+              const active = isActive(item.href);
+
+              return (
+                <Link
+                  key={item.key}
+                  href={item.href}
+                  className={cn(
+                    "shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition",
+                    active
+                      ? "bg-black text-white"
+                      : "bg-black/5 text-black/70 hover:bg-black/10",
+                  )}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
       </div>
 
-      <nav className="mt-4 space-y-1">
-        {items.map((item) => {
-          const active = isActive(item.href);
+      {/* Desktop */}
+      <aside className="hidden rounded-3xl border border-black/10 bg-white p-4 lg:sticky lg:top-6 lg:block lg:h-[calc(100vh-3rem)]">
+        <div className="px-2 py-2">
+          <p className="text-xs font-medium text-black/40">WakeUp</p>
+          <h2 className="mt-1 text-lg font-semibold text-black">
+            {t(locale, "대시보드", "Dashboard", "Tableau de bord")}
+          </h2>
+        </div>
 
-          return (
-            <Link
-              key={item.key}
-              href={item.href}
-              className={cn(
-                "flex items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium transition",
-                active
-                  ? "bg-black text-white"
-                  : "text-black/70 hover:bg-black/5",
-              )}
-            >
-              <span className="truncate">{item.label}</span>
-              <span
+        <nav className="mt-4 space-y-1">
+          {items.map((item) => {
+            const active = isActive(item.href);
+
+            return (
+              <Link
+                key={item.key}
+                href={item.href}
                 className={cn(
-                  "text-xs",
-                  active ? "text-white/70" : "text-black/30",
+                  "flex items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium transition",
+                  active
+                    ? "bg-black text-white"
+                    : "text-black/70 hover:bg-black/5",
                 )}
               >
-                →
-              </span>
-            </Link>
-          );
-        })}
-      </nav>
+                <span className="truncate">{item.label}</span>
+                <span
+                  className={cn(
+                    "text-xs",
+                    active ? "text-white/70" : "text-black/30",
+                  )}
+                >
+                  →
+                </span>
+              </Link>
+            );
+          })}
+        </nav>
 
-      <div className="my-4 h-px bg-black/10" />
+        <div className="my-4 h-px bg-black/10" />
 
-      <div className="rounded-2xl bg-black/5 p-3">
-        <p className="text-xs text-black/50">
-          {t(
-            locale,
-            "피부는 변해요. 주기적으로 다시 테스트해보세요.",
-            "Skin changes. Retake regularly.",
-            "La peau change. Refaites le test régulièrement.",
-          )}
-        </p>
+        <div className="rounded-2xl bg-black/5 p-3">
+          <p className="text-xs text-black/50">
+            {t(
+              locale,
+              "피부는 변해요. 주기적으로 다시 테스트해보세요.",
+              "Skin changes. Retake regularly.",
+              "La peau change. Refaites le test régulièrement.",
+            )}
+          </p>
 
-        <Link
-          href={`/${locale}/quiz`}
-          className="mt-3 inline-flex w-full items-center justify-center rounded-full bg-black px-4 py-2 text-sm font-medium text-white hover:opacity-90 transition"
-        >
-          {t(locale, "테스트 다시하기", "Retake test", "Refaire le test")}
-        </Link>
-      </div>
-    </aside>
+          <Link
+            href={`/${locale}/quiz`}
+            className="mt-3 inline-flex w-full items-center justify-center rounded-full bg-black px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
+          >
+            {t(locale, "테스트 다시하기", "Retake test", "Refaire le test")}
+          </Link>
+        </div>
+      </aside>
+    </>
   );
 }

@@ -1,4 +1,3 @@
-// src/app/[locale]/dashboard/layout.tsx
 import DashboardSidebar from "./DashboardSidebar";
 import type { Locale as RouteLocale } from "@/app/lib/i18n/config";
 
@@ -13,12 +12,9 @@ export default async function DashboardLayout({
 
   return (
     <main className="min-h-screen bg-[#DBEBF1]/40">
-      <div className="mx-auto max-w-7xl px-6 py-10">
-        <div className="grid grid-cols-[280px_1fr] gap-6">
-          {/* Sidebar */}
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-6 lg:py-10">
+        <div className="flex flex-col gap-4 lg:grid lg:grid-cols-[280px_minmax(0,1fr)] lg:gap-6">
           <DashboardSidebar locale={locale as RouteLocale} />
-
-          {/* Main content */}
           <section className="min-w-0">{children}</section>
         </div>
       </div>
