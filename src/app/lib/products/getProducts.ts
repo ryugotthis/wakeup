@@ -58,7 +58,7 @@ function logPerf(
   start: number,
   extra?: Record<string, unknown>,
 ) {
-  if (process.env.NODE_ENV !== "development") return;
+  if (process.env.ENABLE_PERF_LOG !== "true") return;
 
   const duration = (performance.now() - start).toFixed(1);
 
