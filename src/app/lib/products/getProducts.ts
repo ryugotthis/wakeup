@@ -152,23 +152,41 @@ export async function getProducts({
       brand: true,
       category: true,
       imageUrl: true,
+
+      // 🔥 translations 최적화
       translations: {
-        select: { locale: true, name: true, description: true },
+        where: {
+          locale: { in: [locale, "EN"] }, // ⭐ 핵심
+        },
+        select: {
+          locale: true,
+          name: true,
+          description: true,
+        },
       },
+
+      // 🔥 tags 최적화
       tags: {
+        orderBy: { priority: "asc" },
+        take: 4,
         select: {
           tag: {
             select: {
               code: true,
               translations: {
-                select: { locale: true, label: true },
+                where: {
+                  locale: { in: [locale, "EN"] }, // ⭐ 핵심
+                },
+                select: {
+                  locale: true,
+                  label: true,
+                },
               },
             },
           },
         },
-        orderBy: { priority: "asc" },
-        take: 4,
       },
+
       ...(userId
         ? {
             bookmarks: {
