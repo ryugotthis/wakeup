@@ -1,4 +1,6 @@
 import { prisma } from "@/lib/prisma";
+import { unstable_cache } from "next/cache";
+import type { Prisma } from "@prisma/client";
 
 type DataLocale = "KO" | "EN" | "FR";
 type ProductCategory =
@@ -50,17 +52,42 @@ function pickTranslation<
   return byLocale ?? fallback ?? null;
 }
 
-/**
- * 역할:
- * products 페이지에서 사용할 제품 목록을 조회하고,
- * UI에서 바로 사용할 수 있는 형태로 가공해서 반환한다.
- *
- * 포함 기능:
- * - 카테고리 / 피부타입 / 검색어 필터
- * - 페이지네이션
- * - 현재 로그인 사용자 기준 북마크 여부 포함
- * - locale 기준 제품명 / 설명 / 태그 라벨 가공
- */
+// 🔥 로그 함수
+function logPerf(
+  label: string,
+  start: number,
+  extra?: Record<string, unknown>,
+) {
+  if (process.env.NODE_ENV !== "development") return;
+
+  const duration = (performance.now() - start).toFixed(1);
+
+  if (extra) {
+    console.log(`[getProducts] ${label}: ${duration}ms`, extra);
+    return;
+  }
+
+  console.log(`[getProducts] ${label}: ${duration}ms`);
+}
+
+// 🔥 cache key
+function getCacheKey(where: Prisma.ProductWhereInput) {
+  return JSON.stringify(where);
+}
+
+// 🔥 count 캐싱
+function createCachedCount(where: Prisma.ProductWhereInput) {
+  const key = getCacheKey(where);
+
+  return unstable_cache(
+    async () => prisma.product.count({ where }),
+    ["products-count", key],
+    {
+      revalidate: 60,
+    },
+  )();
+}
+
 export async function getProducts({
   userId,
   locale,
@@ -74,9 +101,11 @@ export async function getProducts({
   totalPages: number;
   items: ProductListItem[];
 }> {
+  const totalStart = performance.now();
+
   const skip = (page - 1) * pageSize;
 
-  const where = {
+  const where: Prisma.ProductWhereInput = {
     isPublished: true,
     ...(cat ? { category: cat } : {}),
     ...(skinType ? { skinTypes: { has: skinType } } : {}),
@@ -85,11 +114,11 @@ export async function getProducts({
           translations: {
             some: {
               OR: [
-                { name: { contains: q, mode: "insensitive" as const } },
+                { name: { contains: q, mode: "insensitive" } },
                 {
                   description: {
                     contains: q,
-                    mode: "insensitive" as const,
+                    mode: "insensitive",
                   },
                 },
               ],
@@ -99,49 +128,65 @@ export async function getProducts({
       : {}),
   };
 
-  const [total, products] = await Promise.all([
-    prisma.product.count({ where }),
-    prisma.product.findMany({
-      where,
-      orderBy: { updatedAt: "desc" },
-      skip,
-      take: pageSize,
-      select: {
-        id: true,
-        slug: true,
-        brand: true,
-        category: true,
-        imageUrl: true,
-        translations: {
-          select: { locale: true, name: true, description: true },
-        },
-        tags: {
-          select: {
-            tag: {
-              select: {
-                code: true,
-                translations: {
-                  select: { locale: true, label: true },
-                },
+  // 🔥 count 측정
+  const countStart = performance.now();
+  const total = q
+    ? await prisma.product.count({ where })
+    : await createCachedCount(where);
+
+  logPerf("count", countStart, {
+    total,
+    isCached: !q,
+  });
+
+  // 🔥 findMany 측정
+  const findStart = performance.now();
+  const products = await prisma.product.findMany({
+    where,
+    orderBy: { updatedAt: "desc" },
+    skip,
+    take: pageSize,
+    select: {
+      id: true,
+      slug: true,
+      brand: true,
+      category: true,
+      imageUrl: true,
+      translations: {
+        select: { locale: true, name: true, description: true },
+      },
+      tags: {
+        select: {
+          tag: {
+            select: {
+              code: true,
+              translations: {
+                select: { locale: true, label: true },
               },
             },
           },
-          orderBy: { priority: "asc" },
-          take: 4,
         },
-        ...(userId
-          ? {
-              bookmarks: {
-                where: { userId },
-                select: { id: true },
-                take: 1,
-              },
-            }
-          : {}),
+        orderBy: { priority: "asc" },
+        take: 4,
       },
-    }),
-  ]);
+      ...(userId
+        ? {
+            bookmarks: {
+              where: { userId },
+              select: { id: true },
+              take: 1,
+            },
+          }
+        : {}),
+    },
+  });
 
+  logPerf("findMany", findStart, {
+    length: products.length,
+  });
+
+  // 🔥 map 측정
+  const mapStart = performance.now();
   const items: ProductListItem[] = products.map((p) => {
     const tr = pickTranslation(p.translations, locale);
     const name = tr?.name ?? p.slug;
@@ -164,6 +209,15 @@ export async function getProducts({
       tagLabels,
       isBookmarked: "bookmarks" in p ? p.bookmarks.length > 0 : false,
     };
+  });
+
+  logPerf("map", mapStart, {
+    items: items.length,
+  });
+
+  logPerf("total", totalStart, {
+    total,
+    totalPages: Math.max(1, Math.ceil(total / pageSize)),
   });
 
   return {

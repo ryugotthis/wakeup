@@ -40,6 +40,23 @@ function cn(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
 }
 
+function logPagePerf(
+  label: string,
+  start: number,
+  extra?: Record<string, unknown>,
+) {
+  if (process.env.NODE_ENV !== "development") return;
+
+  const duration = (performance.now() - start).toFixed(1);
+
+  if (extra) {
+    console.log(`[products/page] ${label}: ${duration}ms`, extra);
+    return;
+  }
+
+  console.log(`[products/page] ${label}: ${duration}ms`);
+}
+
 function Chip({
   children,
   tone = "default",
@@ -130,20 +147,19 @@ export default async function Page({
   params: Promise<{ locale: RouteLocale }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  const pageStart = performance.now();
+
   const { locale: routeLocale } = await params;
   const dataLocale = routeLocaleToDataLocale(routeLocale);
   const sp = await searchParams;
 
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  const isAuthed = !!user;
-
   const q = typeof sp.q === "string" ? sp.q.trim() : "";
-  const cat = isCategory(sp.cat) ? sp.cat : undefined;
-  const skinType = isSkinType(sp.skinType) ? sp.skinType : undefined;
+  const cat =
+    typeof sp.cat === "string" && isCategory(sp.cat) ? sp.cat : undefined;
+  const skinType =
+    typeof sp.skinType === "string" && isSkinType(sp.skinType)
+      ? sp.skinType
+      : undefined;
 
   const page = Math.max(
     1,
@@ -152,6 +168,20 @@ export default async function Page({
 
   const PAGE_SIZE = 12;
 
+  const createClientStart = performance.now();
+  const supabase = await createClient();
+  logPagePerf("createClient", createClientStart);
+
+  const getUserStart = performance.now();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const isAuthed = Boolean(user);
+  logPagePerf("getUser", getUserStart, {
+    isAuthed,
+  });
+
+  const getProductsStart = performance.now();
   const {
     total,
     totalPages,
@@ -164,6 +194,24 @@ export default async function Page({
     skinType,
     page,
     pageSize: PAGE_SIZE,
+  });
+  logPagePerf("getProducts", getProductsStart, {
+    total,
+    totalPages,
+    itemsLength: productItems.length,
+    hasUserId: Boolean(user?.id),
+    q: q || "",
+    cat: cat ?? null,
+    skinType: skinType ?? null,
+    page,
+    pageSize: PAGE_SIZE,
+  });
+
+  logPagePerf("total", pageStart, {
+    isAuthed,
+    total,
+    totalPages,
+    itemsLength: productItems.length,
   });
 
   const buildUrl = (next: Record<string, string | undefined>) => {
