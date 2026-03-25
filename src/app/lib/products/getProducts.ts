@@ -48,11 +48,11 @@ function logPerf(
   const duration = (performance.now() - start).toFixed(1);
 
   if (extra) {
-    console.log(`[getProducts MIN] ${label}: ${duration}ms`, extra);
+    console.log(`[getProducts NO_ORDER] ${label}: ${duration}ms`, extra);
     return;
   }
 
-  console.log(`[getProducts MIN] ${label}: ${duration}ms`);
+  console.log(`[getProducts NO_ORDER] ${label}: ${duration}ms`);
 }
 
 function getCacheKey(where: Prisma.ProductWhereInput) {
@@ -121,11 +121,10 @@ export async function getProducts({
     usesCountCache: !q,
   });
 
-  // relation 전부 제거한 최소 조회
   const findStart = performance.now();
   const products = await prisma.product.findMany({
     where,
-    orderBy: { updatedAt: "desc" },
+    // 🔥 orderBy 제거 실험
     skip,
     take: pageSize,
     select: {
@@ -139,6 +138,10 @@ export async function getProducts({
 
   logPerf("findMany", findStart, {
     length: products.length,
+    hasUserId: Boolean(userId),
+    locale,
+    page,
+    pageSize,
   });
 
   const mapStart = performance.now();
@@ -147,12 +150,12 @@ export async function getProducts({
       id: p.id,
       slug: p.slug,
       category: p.category,
-      name: p.slug, // 임시
+      name: p.slug,
       brand: p.brand,
-      description: "", // 임시
+      description: "",
       imageUrl: p.imageUrl,
-      tagLabels: [], // 임시
-      isBookmarked: false, // 임시
+      tagLabels: [],
+      isBookmarked: false,
     };
   });
 
