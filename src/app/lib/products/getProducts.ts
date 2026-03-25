@@ -122,6 +122,9 @@ export async function getProducts({
       category: true,
       imageUrl: true,
       translations: {
+        where: {
+          locale: { in: [locale, "EN"] },
+        },
         select: {
           locale: true,
           name: true,
@@ -136,6 +139,9 @@ export async function getProducts({
             select: {
               code: true,
               translations: {
+                where: {
+                  locale: { in: [locale, "EN"] },
+                },
                 select: {
                   locale: true,
                   label: true,
