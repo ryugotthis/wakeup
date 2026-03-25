@@ -38,21 +38,6 @@ export type ProductListItem = {
   isBookmarked: boolean;
 };
 
-function pickTranslation<
-  T extends {
-    locale: "KO" | "EN" | "FR";
-    name?: string;
-    description?: string | null;
-    label?: string;
-  },
->(translations: T[], locale: DataLocale) {
-  const byLocale = translations.find((x) => x.locale === locale);
-  const fallback =
-    translations.find((x) => x.locale === "EN") ?? translations[0];
-  return byLocale ?? fallback ?? null;
-}
-
-// 🔥 로그 함수
 function logPerf(
   label: string,
   start: number,
@@ -63,19 +48,17 @@ function logPerf(
   const duration = (performance.now() - start).toFixed(1);
 
   if (extra) {
-    console.log(`[getProducts] ${label}: ${duration}ms`, extra);
+    console.log(`[getProducts MIN] ${label}: ${duration}ms`, extra);
     return;
   }
 
-  console.log(`[getProducts] ${label}: ${duration}ms`);
+  console.log(`[getProducts MIN] ${label}: ${duration}ms`);
 }
 
-// 🔥 cache key
 function getCacheKey(where: Prisma.ProductWhereInput) {
   return JSON.stringify(where);
 }
 
-// 🔥 count 캐싱
 function createCachedCount(where: Prisma.ProductWhereInput) {
   const key = getCacheKey(where);
 
@@ -128,7 +111,6 @@ export async function getProducts({
       : {}),
   };
 
-  // 🔥 count 측정
   const countStart = performance.now();
   const total = q
     ? await prisma.product.count({ where })
@@ -136,10 +118,10 @@ export async function getProducts({
 
   logPerf("count", countStart, {
     total,
-    isCached: !q,
+    usesCountCache: !q,
   });
 
-  // 🔥 findMany 측정
+  // relation 전부 제거한 최소 조회
   const findStart = performance.now();
   const products = await prisma.product.findMany({
     where,
@@ -152,50 +134,6 @@ export async function getProducts({
       brand: true,
       category: true,
       imageUrl: true,
-
-      // 🔥 translations 최적화
-      translations: {
-        where: {
-          locale: { in: [locale, "EN"] }, // ⭐ 핵심
-        },
-        select: {
-          locale: true,
-          name: true,
-          description: true,
-        },
-      },
-
-      // 🔥 tags 최적화
-      tags: {
-        orderBy: { priority: "asc" },
-        take: 4,
-        select: {
-          tag: {
-            select: {
-              code: true,
-              translations: {
-                where: {
-                  locale: { in: [locale, "EN"] }, // ⭐ 핵심
-                },
-                select: {
-                  locale: true,
-                  label: true,
-                },
-              },
-            },
-          },
-        },
-      },
-
-      ...(userId
-        ? {
-            bookmarks: {
-              where: { userId },
-              select: { id: true },
-              take: 1,
-            },
-          }
-        : {}),
     },
   });
 
@@ -203,29 +141,18 @@ export async function getProducts({
     length: products.length,
   });
 
-  // 🔥 map 측정
   const mapStart = performance.now();
   const items: ProductListItem[] = products.map((p) => {
-    const tr = pickTranslation(p.translations, locale);
-    const name = tr?.name ?? p.slug;
-    const description = tr?.description ?? "";
-
-    const tagLabels =
-      p.tags?.map((x) => {
-        const tt = pickTranslation(x.tag.translations, locale);
-        return tt?.label ?? x.tag.code;
-      }) ?? [];
-
     return {
       id: p.id,
       slug: p.slug,
       category: p.category,
-      name,
+      name: p.slug, // 임시
       brand: p.brand,
-      description,
+      description: "", // 임시
       imageUrl: p.imageUrl,
-      tagLabels,
-      isBookmarked: "bookmarks" in p ? p.bookmarks.length > 0 : false,
+      tagLabels: [], // 임시
+      isBookmarked: false, // 임시
     };
   });
 
@@ -236,6 +163,13 @@ export async function getProducts({
   logPerf("total", totalStart, {
     total,
     totalPages: Math.max(1, Math.ceil(total / pageSize)),
+    locale,
+    hasUserId: Boolean(userId),
+    q: q ?? "",
+    cat: cat ?? null,
+    skinType: skinType ?? null,
+    page,
+    pageSize,
   });
 
   return {
