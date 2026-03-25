@@ -52,6 +52,23 @@ function pickTranslation<
   return byLocale ?? fallback ?? null;
 }
 
+function logPerf(
+  label: string,
+  start: number,
+  extra?: Record<string, unknown>,
+) {
+  if (process.env.ENABLE_PERF_LOG !== "true") return;
+
+  const duration = (performance.now() - start).toFixed(1);
+
+  if (extra) {
+    console.log(`[getProducts] ${label}: ${duration}ms`, extra);
+    return;
+  }
+
+  console.log(`[getProducts] ${label}: ${duration}ms`);
+}
+
 function getCacheKey(where: Prisma.ProductWhereInput) {
   return JSON.stringify(where);
 }
@@ -81,6 +98,8 @@ export async function getProducts({
   totalPages: number;
   items: ProductListItem[];
 }> {
+  const totalStart = performance.now();
+
   const skip = (page - 1) * pageSize;
 
   const where: Prisma.ProductWhereInput = {
@@ -106,10 +125,23 @@ export async function getProducts({
       : {}),
   };
 
+  const countStart = performance.now();
   const total = q
     ? await prisma.product.count({ where })
     : await createCachedCount(where);
 
+  logPerf("count", countStart, {
+    total,
+    usesCountCache: !q,
+    locale,
+    q: q ?? "",
+    cat: cat ?? null,
+    skinType: skinType ?? null,
+    page,
+    pageSize,
+  });
+
+  const findManyStart = performance.now();
   const products = await prisma.product.findMany({
     where,
     orderBy: { updatedAt: "desc" },
@@ -163,6 +195,18 @@ export async function getProducts({
     },
   });
 
+  logPerf("findMany", findManyStart, {
+    length: products.length,
+    hasUserId: Boolean(userId),
+    locale,
+    q: q ?? "",
+    cat: cat ?? null,
+    skinType: skinType ?? null,
+    page,
+    pageSize,
+  });
+
+  const mapStart = performance.now();
   const items: ProductListItem[] = products.map((p) => {
     const tr = pickTranslation(p.translations, locale);
     const name = tr?.name ?? p.slug;
@@ -185,6 +229,24 @@ export async function getProducts({
       tagLabels,
       isBookmarked: "bookmarks" in p ? p.bookmarks.length > 0 : false,
     };
+  });
+
+  logPerf("map", mapStart, {
+    items: items.length,
+    locale,
+  });
+
+  logPerf("total", totalStart, {
+    total,
+    totalPages: Math.max(1, Math.ceil(total / pageSize)),
+    items: items.length,
+    hasUserId: Boolean(userId),
+    locale,
+    q: q ?? "",
+    cat: cat ?? null,
+    skinType: skinType ?? null,
+    page,
+    pageSize,
   });
 
   return {
