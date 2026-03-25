@@ -38,21 +38,18 @@ export type ProductListItem = {
   isBookmarked: boolean;
 };
 
-function logPerf(
-  label: string,
-  start: number,
-  extra?: Record<string, unknown>,
-) {
-  if (process.env.ENABLE_PERF_LOG !== "true") return;
-
-  const duration = (performance.now() - start).toFixed(1);
-
-  if (extra) {
-    console.log(`[getProducts NO_ORDER] ${label}: ${duration}ms`, extra);
-    return;
-  }
-
-  console.log(`[getProducts NO_ORDER] ${label}: ${duration}ms`);
+function pickTranslation<
+  T extends {
+    locale: "KO" | "EN" | "FR";
+    name?: string;
+    description?: string | null;
+    label?: string;
+  },
+>(translations: T[], locale: DataLocale) {
+  const byLocale = translations.find((x) => x.locale === locale);
+  const fallback =
+    translations.find((x) => x.locale === "EN") ?? translations[0];
+  return byLocale ?? fallback ?? null;
 }
 
 function getCacheKey(where: Prisma.ProductWhereInput) {
@@ -84,8 +81,6 @@ export async function getProducts({
   totalPages: number;
   items: ProductListItem[];
 }> {
-  const totalStart = performance.now();
-
   const skip = (page - 1) * pageSize;
 
   const where: Prisma.ProductWhereInput = {
@@ -111,20 +106,13 @@ export async function getProducts({
       : {}),
   };
 
-  const countStart = performance.now();
   const total = q
     ? await prisma.product.count({ where })
     : await createCachedCount(where);
 
-  logPerf("count", countStart, {
-    total,
-    usesCountCache: !q,
-  });
-
-  const findStart = performance.now();
   const products = await prisma.product.findMany({
     where,
-    // 🔥 orderBy 제거 실험
+    orderBy: { updatedAt: "desc" },
     skip,
     take: pageSize,
     select: {
@@ -133,46 +121,64 @@ export async function getProducts({
       brand: true,
       category: true,
       imageUrl: true,
+      translations: {
+        select: {
+          locale: true,
+          name: true,
+          description: true,
+        },
+      },
+      tags: {
+        orderBy: { priority: "asc" },
+        take: 4,
+        select: {
+          tag: {
+            select: {
+              code: true,
+              translations: {
+                select: {
+                  locale: true,
+                  label: true,
+                },
+              },
+            },
+          },
+        },
+      },
+      ...(userId
+        ? {
+            bookmarks: {
+              where: { userId },
+              select: { id: true },
+              take: 1,
+            },
+          }
+        : {}),
     },
   });
 
-  logPerf("findMany", findStart, {
-    length: products.length,
-    hasUserId: Boolean(userId),
-    locale,
-    page,
-    pageSize,
-  });
-
-  const mapStart = performance.now();
   const items: ProductListItem[] = products.map((p) => {
+    const tr = pickTranslation(p.translations, locale);
+    const name = tr?.name ?? p.slug;
+    const description = tr?.description ?? "";
+
+    const tagLabels =
+      p.tags?.map((x) => {
+        const tt = pickTranslation(x.tag.translations, locale);
+        return tt?.label ?? x.tag.code;
+      }) ?? [];
+
     return {
       id: p.id,
       slug: p.slug,
       category: p.category,
-      name: p.slug,
+      name,
       brand: p.brand,
-      description: "",
+      description,
       imageUrl: p.imageUrl,
-      tagLabels: [],
-      isBookmarked: false,
+      tagLabels,
+      isBookmarked: "bookmarks" in p ? p.bookmarks.length > 0 : false,
     };
-  });
-
-  logPerf("map", mapStart, {
-    items: items.length,
-  });
-
-  logPerf("total", totalStart, {
-    total,
-    totalPages: Math.max(1, Math.ceil(total / pageSize)),
-    locale,
-    hasUserId: Boolean(userId),
-    q: q ?? "",
-    cat: cat ?? null,
-    skinType: skinType ?? null,
-    page,
-    pageSize,
   });
 
   return {
