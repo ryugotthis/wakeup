@@ -41,6 +41,7 @@
 
 - Tablet / Mobile 레이아웃 대응
   <video src="https://github.com/user-attachments/assets/399f1ba8-301b-4909-b315-0fa42b15c6b3" autoplay loop muted playsinline width="600" />
+
   <video src="https://github.com/user-attachments/assets/11463074-9c65-4a85-a2cc-42e7a64bb617" autoplay loop muted playsinline width="600" />
 
 ---
