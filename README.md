@@ -9,7 +9,7 @@
 또한 로그인 전후 흐름이 끊기지 않도록 사용자 행동을 유지·복원하는 구조를 설계해  
 자연스러운 사용자 경험을 만드는 데 집중했습니다.
 
-[![🌐 Live Demo](https://img.shields.io/badge/Live_Demo-000000?style=for-the-badge&logo=vercel&logoColor=white)](링크)
+[![🌐 Live Demo](https://img.shields.io/badge/Live_Demo-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://wakeup-nine.vercel.app/)
 
 ---
 
@@ -20,28 +20,28 @@
 ### 1. 피부 테스트 → 결과 확인
 
 - SKTI 테스트를 통해 피부 타입을 도출하는 흐름
-  ![skti-test-to-result](https://github.com/user-attachments/assets/b2e50888-a74f-4c15-ad55-617e12ca6193)
+  <video src="https://github.com/user-attachments/assets/b2e50888-a74f-4c15-ad55-617e12ca6193" autoplay loop muted playsinline width="600"/>
 
 ### 2. 상품 탐색 → 필터 적용 → 상세 페이지
 
 - 피부 타입 기반으로 상품을 탐색하고 상세 정보까지 확인하는 흐름
-  ![skin-type-product-filtering](https://github.com/user-attachments/assets/2e402375-5ebe-4df9-aec7-448430ac56a3)
+  <video src="https://github.com/user-attachments/assets/2e402375-5ebe-4df9-aec7-448430ac56a3" autoplay loop muted playsinline width="600" />
 
 ### 3. 찜 등록 → 대시보드에서 확인
 
 - 상품 페이지에서 저장한 데이터를 대시보드에서 관리하는 흐름
-  ![bookmark-to-dashboard](https://github.com/user-attachments/assets/64292336-cc86-4745-8d1e-1122b9f49739)
+  <video src="https://github.com/user-attachments/assets/64292336-cc86-4745-8d1e-1122b9f49739" autoplay loop muted playsinline width="600" />
 
 ### 4. 다국어 지원
 
 - 한국어 / 영어 / 프랑스어 전환
-  ![i18n-localization](https://github.com/user-attachments/assets/2f084c2e-25aa-4efc-bea0-f34f9d2a410d)
+  <video src="https://github.com/user-attachments/assets/2f084c2e-25aa-4efc-bea0-f34f9d2a410d" autoplay loop muted playsinline width="600" />
 
 ### 5. 반응형 UI
 
 - Tablet / Mobile 레이아웃 대응
-  ![responsive-tablet](https://github.com/user-attachments/assets/399f1ba8-301b-4909-b315-0fa42b15c6b3)
-  ![responsive-mobile](https://github.com/user-attachments/assets/11463074-9c65-4a85-a2cc-42e7a64bb617)
+  <video src="https://github.com/user-attachments/assets/399f1ba8-301b-4909-b315-0fa42b15c6b3" autoplay loop muted playsinline width="600" />
+  <video src="https://github.com/user-attachments/assets/11463074-9c65-4a85-a2cc-42e7a64bb617" autoplay loop muted playsinline width="600" />
 
 ---
 
